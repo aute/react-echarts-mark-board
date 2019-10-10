@@ -1,4 +1,4 @@
-# [react-echarts-draw-mark]()
+# [react-echarts-draw-mark](https://github.com/aute/react-echarts-draw-mark)
 [English](./README.md) | 简体中文
 
 react-echarts-draw-mark 框架
@@ -6,14 +6,6 @@ react-echarts-draw-mark 框架
 ## :star: 特性
 
 - react-echarts-draw-mark
-
-## :pill: 兼容性
-单元测试保证支持如下环境：
-
-| IE   | CH   | FF   | SF   | OP   | IOS  | Android   
-| ---- | ---- | ---- | ---- | ---- | ---- | ---- | ----- |
-| *+   | *+ | *+  | *+   | *+  | *+   | *+   
-
 
 ## :open_file_folder: 目录介绍
 
