@@ -79,7 +79,7 @@ const Shape = (option: { shapeType: string; color?: string; }): Shape => {
   }
 };
 
-function reducer(data: { selected: number, shapeList: Shape[] }, action: { type: string; location?: Anchor; shapeType?: string; anchorOrdinal?: number; shapeOrdinal?: number; newShapeList?: any; color?:string }) {
+function reducer(data: { selected: number, shapeList: Shape[] }, action: { type: string; location?: Anchor; shapeType?: string; anchorOrdinal?: number; shapeOrdinal?: number; newShapeList?: any; color?: string }) {
   const { type, location, newShapeList, shapeOrdinal, shapeType, anchorOrdinal, color } = action
   let { shapeList, selected } = data
   let selectedItem = shapeList[selected]
@@ -94,7 +94,7 @@ function reducer(data: { selected: number, shapeList: Shape[] }, action: { type:
       }
       break
     case 'DELETE_SHAPE':
-      if (typeof(shapeOrdinal) === "undefined") {
+      if (typeof (shapeOrdinal) === "undefined") {
         break
       }
       data = {
@@ -104,7 +104,7 @@ function reducer(data: { selected: number, shapeList: Shape[] }, action: { type:
       break
 
     case 'CHANGE_SELECTED':
-      if (typeof(shapeOrdinal) === "undefined") {
+      if (typeof (shapeOrdinal) === "undefined") {
         break
       }
       data = {
@@ -143,7 +143,7 @@ function reducer(data: { selected: number, shapeList: Shape[] }, action: { type:
       }
       break
     case 'MOVE_ANCHOR':
-      if (selectedItem && selectedItem.data.length > 0 && anchorOrdinal) {
+      if (selectedItem && selectedItem.data.length > 0 && typeof anchorOrdinal === 'number') {
         selectedItem.data = R.update(anchorOrdinal, location, selectedItem.data) as Anchor[];
         if (selectedItem.type === 'polygon' && selectedItem.over && action.anchorOrdinal === selectedItem.data.length - 1) {
           selectedItem.data = R.update(0, location, selectedItem.data) as Anchor[];
@@ -188,11 +188,11 @@ const MarkTool = (Props: Props) => {
           type: 'line',
           symbolSize: index === data.selected ? 14 : 0,
           data: item.data,
-          lineStyle:{
-            color:item.color,
+          lineStyle: {
+            color: item.color,
           },
-          itemStyle:{
-            color:item.color,
+          itemStyle: {
+            color: item.color,
           },
           markLine: item.type === 'sides' && {
             symbol: ['circle', 'triangle'],
@@ -257,8 +257,8 @@ const MarkTool = (Props: Props) => {
     dispatch({ type: mode, location })
   })
 
-  const createShape = (shapeType: string, color?:string) => {
-    dispatch({ type: 'CREATE_SHAPE', shapeType, color})
+  const createShape = (shapeType: string, color?: string) => {
+    dispatch({ type: 'CREATE_SHAPE', shapeType, color })
   }
 
   const deleteShape = (shapeOrdinal: number) => {

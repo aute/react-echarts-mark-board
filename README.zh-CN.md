@@ -1,7 +1,7 @@
 # [react-echarts-draw-mark](https://github.com/aute/react-echarts-draw-mark)
 [English](./README.md) | 简体中文
 
-react-echarts-draw-mark 框架
+react-echarts-draw-mark
 
 ## :star: 特性
 
@@ -30,7 +30,7 @@ $ npm install --save react-echarts-draw-mark
 如果你是webpack等环境
 
 ```js
-import react-echarts-draw-mark from 'react-echarts-draw-mark';
+import reactEchartsDrawMark from 'react-echarts-draw-mark';
 ```
 
 ## :bookmark_tabs: 文档
