@@ -7,15 +7,16 @@ import { useState, useReducer, useEffect } from "react";
 type Anchor = [number, number]
 
 type Shape = {
-  data: Anchor[],
+  anchors: Anchor[],
   color?: string,
   over: boolean,
   type: string,
+  data?: string
 }
 
 type Props = {
   selected: number, value, onChange: (arg0) => void, onReady: (arg0: {
-    createShape: (shapeType: string, color?: string) => void,
+    createShape: (opt: { shapeType: string, color?: string, data?: string }) => void,
     deleteShape: (shapeType: number) => void;
   }) => void;
 }
@@ -70,25 +71,27 @@ const setClose = (polygon: Anchor[]): Anchor[] => {
   return R.update(-1, magnetic(R.head(polygon), R.last(polygon)), polygon)
 }
 
-const Shape = (option: { shapeType: string; color?: string; }): Shape => {
+const Shape = (option: { shapeType: string; color?: string; data?: string }): Shape => {
   return {
-    data: [],
+    anchors: [],
     color: option.color,
     over: false,
     type: option.shapeType,
+    data: option.data
   }
 };
 
-function reducer(data: { selected: number, shapeList: Shape[] }, action: { type: string; location?: Anchor; shapeType?: string; anchorOrdinal?: number; shapeOrdinal?: number; newShapeList?: any; color?: string }) {
-  const { type, location, newShapeList, shapeOrdinal, shapeType, anchorOrdinal, color } = action
-  let { shapeList, selected } = data
+function reducer(payload: { selected: number, shapeList: Shape[] }, action: { type: string; location?: Anchor; shapeType?: string; anchorOrdinal?: number; shapeOrdinal?: number; newShapeList?: any; color?: string, data?: string }) {
+  const { type, location, newShapeList, shapeOrdinal, shapeType, anchorOrdinal, color, data } = action
+  let { shapeList, selected } = payload
   let selectedItem = shapeList[selected]
   switch (type) {
     case 'CREATE_SHAPE':
-      data = {
+      payload = {
         shapeList: [...shapeList, Shape({
           shapeType: shapeType ? shapeType : 'line',
-          color
+          color,
+          data
         })],
         selected: shapeList.length
       }
@@ -97,7 +100,7 @@ function reducer(data: { selected: number, shapeList: Shape[] }, action: { type:
       if (typeof (shapeOrdinal) === "undefined") {
         break
       }
-      data = {
+      payload = {
         shapeList: R.remove(shapeOrdinal, 1, shapeList),
         selected: 0
       }
@@ -107,8 +110,8 @@ function reducer(data: { selected: number, shapeList: Shape[] }, action: { type:
       if (typeof (shapeOrdinal) === "undefined") {
         break
       }
-      data = {
-        ...data,
+      payload = {
+        ...payload,
         selected: shapeOrdinal
       }
       break
@@ -117,64 +120,64 @@ function reducer(data: { selected: number, shapeList: Shape[] }, action: { type:
       if (!selectedItem || selectedItem.over || !location) {
         break
       }
-      if (selectedItem.data.length < 1) {
-        selectedItem.data.push(location)
+      if (selectedItem.anchors.length < 1) {
+        selectedItem.anchors.push(location)
       }
-      if (selectedItem.type === 'polygon' && selectedItem.data.length > 2) {
-        selectedItem.data = setClose(selectedItem.data)
-        selectedItem.over = isClose(selectedItem.data)
-        if (selectedItem.over) data = {
-          ...data
+      if (selectedItem.type === 'polygon' && selectedItem.anchors.length > 2) {
+        selectedItem.anchors = setClose(selectedItem.anchors)
+        selectedItem.over = isClose(selectedItem.anchors)
+        if (selectedItem.over) payload = {
+          ...payload
         }
       }
-      if (selectedItem.type === 'sides' && selectedItem.data.length > 1) {
+      if (selectedItem.type === 'sides' && selectedItem.anchors.length > 1) {
         selectedItem.over = true
-        data = { ...data }
+        payload = { ...payload }
         break
       }
-      selectedItem.data.push(location)
-      data = { ...data }
+      selectedItem.anchors.push(location)
+      payload = { ...payload }
       break
 
     case 'MOVE_LAST_ANCHOR':
-      if (selectedItem && !selectedItem.over && selectedItem.data.length > 0) {
-        selectedItem.data = R.update(-1, location, selectedItem.data) as Anchor[];
-        data = { ...data }
+      if (selectedItem && !selectedItem.over && selectedItem.anchors.length > 0) {
+        selectedItem.anchors = R.update(-1, location, selectedItem.anchors) as Anchor[];
+        payload = { ...payload }
       }
       break
     case 'MOVE_ANCHOR':
-      if (selectedItem && selectedItem.data.length > 0 && typeof anchorOrdinal === 'number') {
-        selectedItem.data = R.update(anchorOrdinal, location, selectedItem.data) as Anchor[];
-        if (selectedItem.type === 'polygon' && selectedItem.over && action.anchorOrdinal === selectedItem.data.length - 1) {
-          selectedItem.data = R.update(0, location, selectedItem.data) as Anchor[];
+      if (selectedItem && selectedItem.anchors.length > 0 && typeof anchorOrdinal === 'number') {
+        selectedItem.anchors = R.update(anchorOrdinal, location, selectedItem.anchors) as Anchor[];
+        if (selectedItem.type === 'polygon' && selectedItem.over && action.anchorOrdinal === selectedItem.anchors.length - 1) {
+          selectedItem.anchors = R.update(0, location, selectedItem.anchors) as Anchor[];
         }
-        data = { ...data }
+        payload = { ...payload }
       }
       break
     case 'OVER':
-      if (selectedItem && !selectedItem.over && selectedItem.data.length > 0) {
-        selectedItem.data = R.slice(0, -2, selectedItem.data)
-        if (selectedItem.type === 'polygon' && selectedItem.data.length > 3) {
-          selectedItem.data = R.update(-1, R.head(selectedItem.data), selectedItem.data);
+      if (selectedItem && !selectedItem.over && selectedItem.anchors.length > 0) {
+        selectedItem.anchors = R.slice(0, -2, selectedItem.anchors)
+        if (selectedItem.type === 'polygon' && selectedItem.anchors.length > 3) {
+          selectedItem.anchors = R.update(-1, R.head(selectedItem.anchors), selectedItem.anchors);
         }
-        if (selectedItem.type === 'polygon' && selectedItem.data.length <= 3) {
+        if (selectedItem.type === 'polygon' && selectedItem.anchors.length <= 3) {
           break
         }
-        if (selectedItem.type === 'line' && selectedItem.data.length < 2) {
+        if (selectedItem.type === 'line' && selectedItem.anchors.length < 2) {
           break
         }
         selectedItem.over = true
-        data = { ...data }
+        payload = { ...payload }
       }
       break
     case 'LOAD':
-      data = {
+      payload = {
         selected: 0,
         shapeList: newShapeList
       }
       break
   }
-  return data
+  return payload
 }
 
 const MarkTool = (Props: Props) => {
@@ -183,11 +186,11 @@ const MarkTool = (Props: Props) => {
   useEffect(() => {
     myChart && myChart.setOption({
       ...chartInit,
-      series: data.shapeList.map((item: { data: Anchor[]; type: string; color?: string; }, index: number) => {
+      series: data.shapeList.map((item: { anchors: Anchor[]; type: string; color?: string; }, index: number) => {
         return {
           type: 'line',
           symbolSize: index === data.selected ? 14 : 0,
-          data: item.data,
+          data: item.anchors,
           lineStyle: {
             color: item.color,
           },
@@ -196,20 +199,20 @@ const MarkTool = (Props: Props) => {
           },
           markLine: item.type === 'sides' && {
             symbol: ['circle', 'triangle'],
-            data: item.data[0] && [
+            data: item.anchors[0] && [
               [{
-                coord: [(item.data[0][0] + item.data[1][0]) / 2
-                  - (item.data[0][1] - item.data[1][1]) / 4
+                coord: [(item.anchors[0][0] + item.anchors[1][0]) / 2
+                  - (item.anchors[0][1] - item.anchors[1][1]) / 4
                   * (myChart._dom.clientHeight / myChart._dom.clientWidth)
-                  , (item.data[0][1] + item.data[1][1]) / 2
-                + (item.data[0][0] - item.data[1][0]) / 4
+                  , (item.anchors[0][1] + item.anchors[1][1]) / 2
+                + (item.anchors[0][0] - item.anchors[1][0]) / 4
                 * (myChart._dom.clientWidth / myChart._dom.clientHeight)
                 ]
               },
               {
-                coord: [(item.data[0][0] + item.data[1][0]) / 2 + (item.data[0][1] - item.data[1][1]) / 4
+                coord: [(item.anchors[0][0] + item.anchors[1][0]) / 2 + (item.anchors[0][1] - item.anchors[1][1]) / 4
                   * (myChart._dom.clientHeight / myChart._dom.clientWidth)
-                  , (item.data[0][1] + item.data[1][1]) / 2 - (item.data[0][0] - item.data[1][0]) / 4
+                  , (item.anchors[0][1] + item.anchors[1][1]) / 2 - (item.anchors[0][0] - item.anchors[1][0]) / 4
                   * (myChart._dom.clientWidth / myChart._dom.clientHeight)
                 ]
               }]
@@ -257,8 +260,8 @@ const MarkTool = (Props: Props) => {
     dispatch({ type: mode, location })
   })
 
-  const createShape = (shapeType: string, color?: string) => {
-    dispatch({ type: 'CREATE_SHAPE', shapeType, color })
+  const createShape = (opt: { shapeType: string, color?: string, data?: string }) => {
+    dispatch({ type: 'CREATE_SHAPE', shapeType: opt.shapeType, color: opt.color, data: opt.data })
   }
 
   const deleteShape = (shapeOrdinal: number) => {
@@ -280,4 +283,4 @@ const MarkTool = (Props: Props) => {
   </div>
 }
 
-export { MarkTool }
+export default MarkTool;
