@@ -126,8 +126,11 @@ function reducer(payload: { selected: number, shapeList: Shape[] }, action: { ty
       if (selectedItem.type === 'polygon' && selectedItem.anchors.length > 2) {
         selectedItem.anchors = setClose(selectedItem.anchors)
         selectedItem.over = isClose(selectedItem.anchors)
-        if (selectedItem.over) payload = {
-          ...payload
+        if (selectedItem.over) {
+          payload = {
+            ...payload
+          }
+          break
         }
       }
       if (selectedItem.type === 'sides' && selectedItem.anchors.length > 1) {
