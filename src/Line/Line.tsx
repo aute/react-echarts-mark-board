@@ -220,7 +220,7 @@ const MarkTool = (Props: Props) => {
           }
         }
       }),
-      graphic: data.shapeList[data.selected] ? echarts['util'].map(data.shapeList[data.selected].data, (item: any, dataIndex: any) => {
+      graphic: data.shapeList[data.selected] ? echarts['util'].map(data.shapeList[data.selected].anchors, (item: any, dataIndex: any) => {
         return {
           type: 'circle',
           position: myChart.convertToPixel('grid', item),
