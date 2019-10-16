@@ -15,7 +15,7 @@ type Shape = {
 }
 
 type Props = {
-  selected: number, value, onChange: (arg0) => void, onReady: (arg0: {
+  selected: number, value,showGrid, onChange: (arg0) => void, onReady: (arg0: {
     createShape: (opt: { shapeType: string, color?: string, data?: string }) => void,
     deleteShape: (shapeType: number) => void;
   }) => void;
@@ -32,13 +32,21 @@ const chartInit = {
     min: 0,
     max: 100,
     type: 'value',
-    axisLine: { lineStyle: { color: '#DEDEDE' }, onZero: false }
+    splitLine: {
+      show:false
+    },
+    axisLine: { 
+      lineStyle: { color: 'rgba(0,0,0,0)' }, onZero: false }
   },
   yAxis: {
     min: 0,
     max: 100,
     type: 'value',
-    axisLine: { lineStyle: { color: '#DEDEDE' }, onZero: false }
+    splitLine: {
+      show:false
+    },
+    axisLine: { 
+      lineStyle: { color: 'rgba(0,0,0,0)' }, onZero: false }
   },
   series: []
 }
@@ -186,6 +194,8 @@ function reducer(payload: { selected: number, shapeList: Shape[] }, action: { ty
 const MarkTool = (Props: Props) => {
   const [myChart, setMayChart] = useState<any | null>(null)
   const [data, dispatch] = useReducer(reducer, { selected: 0, shapeList: Props.value });
+  chartInit.xAxis.splitLine.show = Props.showGrid
+  chartInit.yAxis.splitLine.show = Props.showGrid
   useEffect(() => {
     myChart && myChart.setOption({
       ...chartInit,
