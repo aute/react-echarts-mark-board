@@ -2,7 +2,7 @@
 
 English | [简体中文](./README.zh-CN.md)
 
-The library.
+The library
 
 ## DEMO
 [DEMO](https://aute.github.io/react-echarts-draw-mark)
