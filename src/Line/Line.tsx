@@ -15,7 +15,7 @@ type Shape = {
 }
 
 type Props = {
-  selected: number, value,showGrid, onChange: (arg0) => void, onReady: (arg0: {
+  selected: number, value,showGrid?:boolean, onChange: (arg0) => void, onReady: (arg0: {
     createShape: (opt: { shapeType: string, color?: string, data?: string }) => void,
     deleteShape: (shapeType: number) => void;
   }) => void;
@@ -58,7 +58,7 @@ const getDistance = (x1: number, y1: number, x2: number, y2: number): number => 
 
 const getPoint = (e: any): Anchor => {
   const x = 100 * e.nativeEvent.offsetX / e.target.clientWidth;
-  const y = 100 - 100 * e.nativeEvent.offsetY / e.target.clientHeight;
+  const y = 100 * e.nativeEvent.offsetY / e.target.clientHeight;
   return [x, y];
 }
 
@@ -194,8 +194,8 @@ function reducer(payload: { selected: number, shapeList: Shape[] }, action: { ty
 const MarkTool = (Props: Props) => {
   const [myChart, setMayChart] = useState<any | null>(null)
   const [data, dispatch] = useReducer(reducer, { selected: 0, shapeList: Props.value });
-  chartInit.xAxis.splitLine.show = Props.showGrid
-  chartInit.yAxis.splitLine.show = Props.showGrid
+  chartInit.xAxis.splitLine.show = Boolean(Props.showGrid)
+  chartInit.yAxis.splitLine.show = Boolean(Props.showGrid)
   useEffect(() => {
     myChart && myChart.setOption({
       ...chartInit,
@@ -203,7 +203,9 @@ const MarkTool = (Props: Props) => {
         return {
           type: 'line',
           symbolSize: index === data.selected ? 14 : 0,
-          data: item.anchors,
+          data: item.anchors.map(i=>{
+            return [i[0],100 - i[1]]
+          }),
           lineStyle: {
             color: item.color,
           },
@@ -217,16 +219,16 @@ const MarkTool = (Props: Props) => {
                 coord: [(item.anchors[0][0] + item.anchors[1][0]) / 2
                   - (item.anchors[0][1] - item.anchors[1][1]) / 4
                   * (myChart._dom.clientHeight / myChart._dom.clientWidth)
-                  , (item.anchors[0][1] + item.anchors[1][1]) / 2
+                  , 100-((item.anchors[0][1] + item.anchors[1][1]) / 2
                 + (item.anchors[0][0] - item.anchors[1][0]) / 4
-                * (myChart._dom.clientWidth / myChart._dom.clientHeight)
+                * (myChart._dom.clientWidth / myChart._dom.clientHeight))
                 ]
               },
               {
                 coord: [(item.anchors[0][0] + item.anchors[1][0]) / 2 + (item.anchors[0][1] - item.anchors[1][1]) / 4
                   * (myChart._dom.clientHeight / myChart._dom.clientWidth)
-                  , (item.anchors[0][1] + item.anchors[1][1]) / 2 - (item.anchors[0][0] - item.anchors[1][0]) / 4
-                  * (myChart._dom.clientWidth / myChart._dom.clientHeight)
+                  , 100-((item.anchors[0][1] + item.anchors[1][1]) / 2 - (item.anchors[0][0] - item.anchors[1][0]) / 4
+                  * (myChart._dom.clientWidth / myChart._dom.clientHeight))
                 ]
               }]
             ]
@@ -236,13 +238,13 @@ const MarkTool = (Props: Props) => {
       graphic: data.shapeList[data.selected] ? echarts['util'].map(data.shapeList[data.selected].anchors, (item: any, dataIndex: any) => {
         return {
           type: 'circle',
-          position: myChart.convertToPixel('grid', item),
+          position: myChart.convertToPixel('grid', [item[0],100-item[1]]),
           shape: { cx: 0, cy: 0, r: 5 },
           invisible: true,
           draggable: true,
           ondrag: echarts['util'].curry(function (this: any, dataIndex: number) {
             const location = myChart.convertFromPixel('grid', this.position);
-            dispatch({ type: 'MOVE_ANCHOR', location, anchorOrdinal: dataIndex })
+            dispatch({ type: 'MOVE_ANCHOR', location:[location[0],100-location[1]], anchorOrdinal: dataIndex })
           }, dataIndex),
           z: 100
         }
