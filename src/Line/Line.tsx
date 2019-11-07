@@ -6,17 +6,33 @@ import { useState, useReducer, useEffect } from "react";
 
 type Anchor = [number, number]
 
+type Anchors = Anchor[]
+
+type ShapeType = 'line' | 'polygon' | 'sides'
+
 type Shape = {
-  anchors: Anchor[],
+  anchors: Anchors,
   color?: string,
   over: boolean,
-  type: string,
-  data?: string
+  type: ShapeType,
+  data?: object
 }
 
 type Props = {
-  selected: number, value,showGrid?:boolean, onChange: (arg0) => void, onReady: (arg0: {
-    createShape: (opt: { shapeType: string, color?: string, data?: string }) => void,
+  selected: number,
+  value:Shape[],
+  showGrid?: boolean,
+  onChange: (data: {
+    selected: number;
+    shapeList: Shape[];
+  }) => void,
+  onReady: (arg0: {
+    createShape: (opt: {
+      shapeType: ShapeType,
+      color?:
+      string,
+      data?: object
+    }) => void,
     deleteShape: (shapeType: number) => void;
   }) => void;
 }
@@ -33,53 +49,55 @@ const chartInit = {
     max: 100,
     type: 'value',
     splitLine: {
-      show:false
+      show: false
     },
-    axisLine: { 
-      lineStyle: { color: 'rgba(0,0,0,0)' }, onZero: false }
+    axisLine: {
+      lineStyle: { color: 'rgba(0,0,0,0)' }, onZero: false
+    }
   },
   yAxis: {
     min: 0,
     max: 100,
     type: 'value',
     splitLine: {
-      show:false
+      show: false
     },
-    axisLine: { 
-      lineStyle: { color: 'rgba(0,0,0,0)' }, onZero: false }
+    axisLine: {
+      lineStyle: { color: 'rgba(0,0,0,0)' }, onZero: false
+    }
   },
   series: []
 }
 
-const getDistance = (x1: number, y1: number, x2: number, y2: number): number => {
-  const s = Math.sqrt(Math.pow(Math.abs(x1 - x2), 2) + Math.pow(Math.abs(y1 - y2), 2))
+const getDistance = (anchor1: Anchor, anchor2: Anchor): number => {
+  const s = Math.sqrt(Math.pow(Math.abs(anchor1[0] - anchor2[0]), 2) + Math.pow(Math.abs(anchor1[1] - anchor2[1]), 2))
   return s;
 }
 
-const getPoint = (e: any): Anchor => {
-  const x = 100 * e.nativeEvent.offsetX / e.target.clientWidth;
-  const y = 100 * e.nativeEvent.offsetY / e.target.clientHeight;
+const getPoint = (e: React.MouseEvent<HTMLElement>): Anchor => {
+  const x = 100 * e.nativeEvent.offsetX / e.currentTarget.clientWidth;
+  const y = 100 * e.nativeEvent.offsetY / e.currentTarget.clientHeight;
   return [x, y];
 }
 
 const magnetic = (staticPoint: Anchor, attractionPoint: Anchor): Anchor => {
   const gravitation = 5
-  const distance = (getDistance as any)(...staticPoint, ...attractionPoint)
+  const distance = getDistance(staticPoint, attractionPoint)
   if (gravitation - distance < 0) {
     return attractionPoint
   }
   return staticPoint
 }
 
-const isClose = (polygon: Anchor[]): boolean => {
+const isClose = (polygon: Anchors): boolean => {
   return R.equals(R.head(polygon), R.last(polygon))
 }
 
-const setClose = (polygon: Anchor[]): Anchor[] => {
+const setClose = (polygon: Anchors): Anchors => {
   return R.update(-1, magnetic(R.head(polygon), R.last(polygon)), polygon)
 }
 
-const Shape = (option: { shapeType: string; color?: string; data?: string }): Shape => {
+const Shape = (option: { shapeType: ShapeType; color?: string; data?: object }): Shape => {
   return {
     anchors: [],
     color: option.color,
@@ -89,7 +107,21 @@ const Shape = (option: { shapeType: string; color?: string; data?: string }): Sh
   }
 };
 
-function reducer(payload: { selected: number, shapeList: Shape[] }, action: { type: string; location?: Anchor; shapeType?: string; anchorOrdinal?: number; shapeOrdinal?: number; newShapeList?: any; color?: string, data?: string }) {
+function reducer(
+  payload: {
+    selected: number,
+    shapeList: Shape[]
+  },
+  action: {
+    type: string;
+    location?: Anchor;
+    shapeType?: ShapeType;
+    anchorOrdinal?: number;
+    shapeOrdinal?: number;
+    newShapeList?: Shape[];
+    color?: string,
+    data?: object
+  }) {
   const { type, location, newShapeList, shapeOrdinal, shapeType, anchorOrdinal, color, data } = action
   let { shapeList, selected } = payload
   let selectedItem = shapeList[selected]
@@ -152,15 +184,15 @@ function reducer(payload: { selected: number, shapeList: Shape[] }, action: { ty
 
     case 'MOVE_LAST_ANCHOR':
       if (selectedItem && !selectedItem.over && selectedItem.anchors.length > 0) {
-        selectedItem.anchors = R.update(-1, location, selectedItem.anchors) as Anchor[];
+        selectedItem.anchors = R.update(-1, location, selectedItem.anchors);
         payload = { ...payload }
       }
       break
     case 'MOVE_ANCHOR':
       if (selectedItem && selectedItem.anchors.length > 0 && typeof anchorOrdinal === 'number') {
-        selectedItem.anchors = R.update(anchorOrdinal, location, selectedItem.anchors) as Anchor[];
+        selectedItem.anchors = R.update(anchorOrdinal, location, selectedItem.anchors);
         if (selectedItem.type === 'polygon' && selectedItem.over && action.anchorOrdinal === selectedItem.anchors.length - 1) {
-          selectedItem.anchors = R.update(0, location, selectedItem.anchors) as Anchor[];
+          selectedItem.anchors = R.update(0, location, selectedItem.anchors);
         }
         payload = { ...payload }
       }
@@ -199,12 +231,12 @@ const MarkTool = (Props: Props) => {
   useEffect(() => {
     myChart && myChart.setOption({
       ...chartInit,
-      series: data.shapeList.map((item: { anchors: Anchor[]; type: string; color?: string; }, index: number) => {
+      series: data.shapeList.map((item: { anchors: Anchors; type: string; color?: string; }, index: number) => {
         return {
           type: 'line',
           symbolSize: index === data.selected ? 14 : 0,
-          data: item.anchors.map(i=>{
-            return [i[0],100 - i[1]]
+          data: item.anchors.map(i => {
+            return [i[0], 100 - i[1]]
           }),
           lineStyle: {
             color: item.color,
@@ -219,32 +251,32 @@ const MarkTool = (Props: Props) => {
                 coord: [(item.anchors[0][0] + item.anchors[1][0]) / 2
                   - (item.anchors[0][1] - item.anchors[1][1]) / 4
                   * (myChart._dom.clientHeight / myChart._dom.clientWidth)
-                  , 100-((item.anchors[0][1] + item.anchors[1][1]) / 2
-                + (item.anchors[0][0] - item.anchors[1][0]) / 4
-                * (myChart._dom.clientWidth / myChart._dom.clientHeight))
+                  , 100 - ((item.anchors[0][1] + item.anchors[1][1]) / 2
+                    + (item.anchors[0][0] - item.anchors[1][0]) / 4
+                    * (myChart._dom.clientWidth / myChart._dom.clientHeight))
                 ]
               },
               {
                 coord: [(item.anchors[0][0] + item.anchors[1][0]) / 2 + (item.anchors[0][1] - item.anchors[1][1]) / 4
                   * (myChart._dom.clientHeight / myChart._dom.clientWidth)
-                  , 100-((item.anchors[0][1] + item.anchors[1][1]) / 2 - (item.anchors[0][0] - item.anchors[1][0]) / 4
-                  * (myChart._dom.clientWidth / myChart._dom.clientHeight))
+                  , 100 - ((item.anchors[0][1] + item.anchors[1][1]) / 2 - (item.anchors[0][0] - item.anchors[1][0]) / 4
+                    * (myChart._dom.clientWidth / myChart._dom.clientHeight))
                 ]
               }]
             ]
           }
         }
       }),
-      graphic: data.shapeList[data.selected] ? echarts['util'].map(data.shapeList[data.selected].anchors, (item: any, dataIndex: any) => {
+      graphic: data.shapeList[data.selected] ? echarts['util'].map(data.shapeList[data.selected].anchors, (item: Anchor, dataIndex: number) => {
         return {
           type: 'circle',
-          position: myChart.convertToPixel('grid', [item[0],100-item[1]]),
+          position: myChart.convertToPixel('grid', [item[0], 100 - item[1]]),
           shape: { cx: 0, cy: 0, r: 5 },
           invisible: true,
           draggable: true,
           ondrag: echarts['util'].curry(function (this: any, dataIndex: number) {
             const location = myChart.convertFromPixel('grid', this.position);
-            dispatch({ type: 'MOVE_ANCHOR', location:[location[0],100-location[1]], anchorOrdinal: dataIndex })
+            dispatch({ type: 'MOVE_ANCHOR', location: [location[0], 100 - location[1]], anchorOrdinal: dataIndex })
           }, dataIndex),
           z: 100
         }
@@ -271,11 +303,11 @@ const MarkTool = (Props: Props) => {
       dispatch({ type: 'LOAD', newShapeList: Props.value })
   }, [Props.value])
 
-  const editAnchor = R.curry((mode: string, location?: Anchor) => {
+  const editAnchor = R.curry((mode: string, location: Anchor) => {
     dispatch({ type: mode, location })
   })
 
-  const createShape = (opt: { shapeType: string, color?: string, data?: string }) => {
+  const createShape = (opt: { shapeType: ShapeType, color?: string, data?: object }) => {
     dispatch({ type: 'CREATE_SHAPE', shapeType: opt.shapeType, color: opt.color, data: opt.data })
   }
 
@@ -284,14 +316,12 @@ const MarkTool = (Props: Props) => {
   }
 
   return <div style={{ height: '100%', width: '100%' }}
-    onClick={R.compose(editAnchor('PUSH_ANCHOR') as any, getPoint)}
-    onMouseMove={R.compose(editAnchor('MOVE_LAST_ANCHOR') as any, getPoint)}
-    onDoubleClick={R.compose(editAnchor('OVER') as any, getPoint)}
+    onClick={R.compose(editAnchor('PUSH_ANCHOR'), getPoint)}
+    onMouseMove={R.compose(editAnchor('MOVE_LAST_ANCHOR'), getPoint)}
+    onDoubleClick={R.compose(editAnchor('OVER'), getPoint)}
   >
     <ReactEcharts
-      onChartReady={e => {
-        setMayChart(e)
-      }}
+      onChartReady={setMayChart}
       option={chartInit}
       style={{ height: '100%', width: '100%' }}
     />
