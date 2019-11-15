@@ -68,7 +68,6 @@ $ npm run release
 $ npm publish
 ```
 
-[storybook](https://storybook.js.org/docs/)
 
 ## :gear: 更新日志
 [CHANGELOG.md](./CHANGELOG.md)

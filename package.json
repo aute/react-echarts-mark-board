@@ -7,9 +7,7 @@
   "scripts": {
     "clean": "rimraf ./lib",
     "build": "rollup -c config/rollup.config.js",
-    "start": "rollup -w -c config/rollup.config.js",
-    "storybook": "start-storybook -p 6006",
-    "build-storybook": "build-storybook -s public -o docs"
+    "start": "rollup -w -c config/rollup.config.dev.js"
   },
   "repository": {
     "type": "git",
@@ -19,16 +17,10 @@
   "license": "MIT",
   "devDependencies": {
     "@babel/core": "^7.5.5",
-    "@storybook/addon-actions": "^5.1.11",
-    "@storybook/addon-info": "^5.1.11",
-    "@storybook/addon-links": "^5.1.11",
-    "@storybook/addons": "^5.1.11",
-    "@storybook/react": "^5.1.11",
+    "@types/echarts": "^4.1.15",
+    "@types/ramda": "^0.26.28",
     "@types/react": "^16.9.2",
     "@types/react-dom": "^16.9.0",
-    "@types/echarts":"^4.1.15",
-    "@types/ramda":"^0.26.28",
-    "@types/storybook__react": "^4.0.2",
     "babel-loader": "^8.0.6",
     "ramda": "^0.26.1",
     "react": "^16.9.0",
@@ -36,10 +28,13 @@
     "rollup": "^1.20.3",
     "rollup-plugin-commonjs": "^10.1.0",
     "rollup-plugin-filesize": "^6.2.0",
+    "rollup-plugin-livereload": "^1.0.4",
     "rollup-plugin-node-resolve": "^5.2.0",
     "rollup-plugin-peer-deps-external": "^2.2.0",
     "rollup-plugin-postcss": "^2.0.3",
     "rollup-plugin-progress": "^1.1.1",
+    "rollup-plugin-replace": "^2.2.0",
+    "rollup-plugin-serve": "^1.0.1",
     "rollup-plugin-terser": "^5.1.1",
     "rollup-plugin-typescript2": "^0.24.0",
     "rollup-plugin-visualizer": "^2.5.4",

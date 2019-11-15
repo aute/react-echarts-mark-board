@@ -27,6 +27,9 @@ export default {
                     target: "ES5",
                     allowSyntheticDefaultImports: true
                 },
+                exclude: [
+                    "node_modules","src/docs"
+                ]
             },
             clean: true
         }),
