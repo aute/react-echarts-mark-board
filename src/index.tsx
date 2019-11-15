@@ -20,7 +20,7 @@ type Shape = {
 
 type Props = {
   selected: number,
-  value:Shape[],
+  value: Shape[],
   showGrid?: boolean,
   onChange: (data: {
     selected: number;

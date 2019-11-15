@@ -13,7 +13,7 @@ export default {
     output: [{
         file: 'docs/example/index.js',
         format: 'iife',
-        sourcemap: false,
+        sourcemap: true,
     }],
     plugins: [
         typescript({
@@ -39,7 +39,7 @@ export default {
             }
         }),
         replace({
-            'process.env.NODE_ENV': JSON.stringify('production')
+            'process.env.NODE_ENV': JSON.stringify('development')
         }),
         resolve(),
 
