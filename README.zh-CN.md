@@ -12,7 +12,7 @@ react-echarts-draw-mark
 ```
 .
 ├── lib 编译产出代码
-├── doc 项目文档
+├── docs 展示例子
 ├── src 源代码目录
 ├── CHANGELOG.md 变更日志
 └── TODO.md 计划功能
@@ -34,7 +34,7 @@ import reactEchartsDrawMark from 'react-echarts-draw-mark';
 ```
 
 ## :bookmark_tabs: 文档
-[API](./doc/api.zh-CN.md)
+[API](./api.zh-CN.md)
 
 ## :kissing_heart: 贡献者指南
 

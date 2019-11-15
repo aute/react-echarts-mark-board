@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import  MarkTool  from '../index'
 import { useState, useRef } from "react";
 
-const Line = () => {
+const Example = () => {
   const markTool = useRef(null)
   const [shapeList, setShapeList] = useState([])
   const [selected, setSelected] = useState(0)
@@ -55,4 +55,4 @@ const Line = () => {
 }
 
 
-ReactDOM.render(<Line />, document.getElementById('root'));
+ReactDOM.render(<Example />, document.getElementById('root'));

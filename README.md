@@ -10,7 +10,7 @@ The library
 ## Directory
 ```
 ├── lib - Compiler output code
-├── doc - Project documents
+├── docs - Example
 ├── src - Source code directory
 ├── test - Unit tests
 ├── CHANGELOG.md - Change log
@@ -33,7 +33,7 @@ import ReactReactDrawMark from 'react-echarts-draw-mark';
 
 
 ## Documents
-[API](./doc/api.md)
+[API](./api.md)
 
 ## Contribution Guide
 

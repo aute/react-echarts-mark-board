@@ -1,9 +1,7 @@
 import external from 'rollup-plugin-peer-deps-external';
 import resolve from 'rollup-plugin-node-resolve';
 import typescript from 'rollup-plugin-typescript2';
-import {
-    terser
-} from 'rollup-plugin-terser';
+import { terser } from 'rollup-plugin-terser';
 import filesize from 'rollup-plugin-filesize';
 import progress from 'rollup-plugin-progress';
 import visualizer from 'rollup-plugin-visualizer';
