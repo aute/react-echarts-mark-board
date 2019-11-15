@@ -14,7 +14,7 @@ export default {
         format: 'es',
         sourcemap: false,
     }, ],
-    external: ['react', 'react-dom', 'echarts-for-react','echarts','ramda'],
+    external: ['react', 'react-dom', 'echarts-for-react','echarts'],
     plugins: [
         external(),
         typescript({
