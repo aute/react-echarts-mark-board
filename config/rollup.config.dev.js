@@ -34,8 +34,13 @@ export default {
         commonjs({
             include: 'node_modules/**',
             namedExports: {
-                react: Object.keys(react),
-                'react-dom': Object.keys(reactDom)
+                'react': Object.keys(react),
+                'react-dom': Object.keys(reactDom),
+                'node_modules/react-is/index.js': [
+                    'isElement',
+                    'isValidElementType',
+                    'ForwardRef'
+                  ]
             }
         }),
         replace({

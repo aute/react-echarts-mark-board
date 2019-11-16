@@ -1,0 +1,45 @@
+.App {
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    flex-direction: row-reverse;
+    background: url(./moon-bg.jpg) center/cover;
+    background-color: #444;
+}
+
+.App-right {
+    width: calc(100vw - 400px);
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.84);
+    button {
+        width: 3rem;
+        height: 3rem;
+        border-radius: 50%;
+        border: 2px solid#fff;
+        color: #fff;
+        background-color:rgba(255, 255, 255, 0)
+    }
+}
+
+.App-Sketchpad {
+    margin: auto;
+    position: absolute;
+    top: 0;
+    left: 80px;
+    bottom: 0;
+    width: 700px;
+    height: 700px;
+    background: url(./sketchpad-bg.jpg) center/cover;
+    background-color: #444;
+}
+h1 {
+    font-size: 8rem;
+    font-style: italic;
+    font-weight: 900;
+    height: 40rem;
+    margin: auto;
+    position: absolute;
+    top: 0;
+    left:650px;
+    bottom: 0;
+}
