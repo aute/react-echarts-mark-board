@@ -1,4 +1,7 @@
 /// <reference types="react" />
+import 'echarts/lib/chart/line';
+import 'echarts/lib/component/graphic';
+import 'echarts/lib/component/markLine';
 declare type Anchor = [number, number];
 declare type Anchors = Anchor[];
 declare type ShapeType = 'line' | 'polygon' | 'sides';

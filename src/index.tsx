@@ -1,7 +1,10 @@
 import React from 'react'
-import ReactEcharts from "echarts-for-react";
+import ReactEchartsCore from 'echarts-for-react/lib/core';
 import * as R from "ramda";
-import echarts from 'echarts';
+import echarts from 'echarts/lib/echarts';
+import 'echarts/lib/chart/line';
+import 'echarts/lib/component/graphic';
+import 'echarts/lib/component/markLine';
 import { useState, useReducer, useEffect } from "react";
 
 type Anchor = [number, number]
@@ -319,7 +322,8 @@ const MarkTool = (Props: Props) => {
     onMouseMove={R.compose(editAnchor('MOVE_LAST_ANCHOR'), getPoint)}
     onDoubleClick={R.compose(editAnchor('OVER'), getPoint)}
   >
-    <ReactEcharts
+    <ReactEchartsCore
+    echarts={echarts}
       onChartReady={setMayChart}
       option={chartInit}
       style={{ height: '100%', width: '100%' }}
