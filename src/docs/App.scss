@@ -11,13 +11,72 @@
     width: calc(100vw - 400px);
     height: 100%;
     background-color: rgba(0, 0, 0, 0.84);
+
     button {
         width: 3rem;
         height: 3rem;
         border-radius: 50%;
         border: 2px solid#fff;
         color: #fff;
-        background-color:rgba(255, 255, 255, 0)
+        background-color: rgba(255, 255, 255, 0);
+        transition: all 0.3s;
+
+        &:hover {
+            color: #000;
+            background-color: rgba(255, 255, 255, 1);
+        }
+    }
+
+    .App-content {
+        margin: auto;
+        position: absolute;
+        height: 32rem;
+        top: 0;
+        left: 1280px;
+        bottom: 0;
+        width: 16rem;
+
+        ul {
+            padding: 0;
+            margin: 2rem 0;
+        }
+
+        li {
+            list-style: none;
+            align-items: center;
+            display: flex;
+            justify-content: space-between;
+            font-size: 1.5rem;
+            color: rgba(255, 255, 255, 0.4);
+            transition: all 0.3s;
+
+            p {
+                margin: 0.75rem 0;
+            }
+
+            .clear {
+                color: rgba(255, 255, 255, 0);
+                transition: all 0.6s;
+            }
+
+            &:hover,
+            &.active {
+                color: rgba(255, 255, 255, 1);
+                transform:translateY(-0.25rem);
+            }
+            &.active {
+                .clear {
+                    color: rgba(255, 255, 255, 1);
+                }
+            }
+        }
+    }
+
+    .buttons {
+        width: 100%;
+        height: 3rem;
+        display: flex;
+        justify-content: space-between;
     }
 }
 
@@ -32,6 +91,7 @@
     background: url(./sketchpad-bg.jpg) center/cover;
     background-color: #444;
 }
+
 h1 {
     font-size: 8rem;
     font-style: italic;
@@ -40,6 +100,6 @@ h1 {
     margin: auto;
     position: absolute;
     top: 0;
-    left:650px;
+    left: 650px;
     bottom: 0;
 }
