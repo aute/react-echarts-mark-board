@@ -5,6 +5,8 @@ import serve from 'rollup-plugin-serve'
 import commonjs from 'rollup-plugin-commonjs';
 import replace from 'rollup-plugin-replace';
 import livereload from 'rollup-plugin-livereload';
+import { terser } from 'rollup-plugin-terser';
+import progress from 'rollup-plugin-progress';
 import react from 'react';
 import reactDom from 'react-dom';
 
@@ -13,7 +15,7 @@ export default {
     output: [{
         file: 'docs/example/index.js',
         format: 'iife',
-        sourcemap: true,
+        sourcemap: false,
     }],
     plugins: [
         typescript({
@@ -48,6 +50,11 @@ export default {
         }),
         resolve(),
 
+        terser(),
+
+        progress({
+            clearLine: true
+        }),
         serve({
             contentBase: 'docs/',
             port: 8080

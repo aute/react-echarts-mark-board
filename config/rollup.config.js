@@ -44,7 +44,7 @@ export default {
         filesize(),
 
         progress({
-            clearLine: false
+            clearLine: true
         }),
 
         visualizer({
