@@ -60,7 +60,7 @@ export default {
             port: 8080
         }),
         livereload({
-            watch: "docs/example"
+            watch: "docs/"
         })
     ],
 };
