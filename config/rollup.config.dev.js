@@ -11,7 +11,7 @@ import react from 'react';
 import reactDom from 'react-dom';
 
 export default {
-    input: 'src/docs/index.tsx',
+    input: 'src/example/index.tsx',
     output: [{
         file: 'docs/example/index.js',
         format: 'iife',
