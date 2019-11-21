@@ -14,7 +14,6 @@ const App = () => {
 
   useEffect(() => {
     shapeList[selected] && (!shapeList[selected].over ? setActiveButton(shapeList[selected].type) : setActiveButton(null))
-
   }, [shapeList, selected])
 
 
@@ -29,48 +28,77 @@ const App = () => {
   }
   return (
     <div className='App'>
-      <div className='App-right'>
-        <div className='App-content'>
-          <div className='buttons'>
-            <button onClick={() => createShape({ shapeType: 'polygon' })} className={activeButton === 'polygon' ? 'active' : ''}>
-              <ChangeHistory style={{ transform: 'translateY(-0.03125rem)' }} />
-            </button>
-            <button onClick={() => createShape({ shapeType: 'line', color: '#fff000' })} className={activeButton === 'line' ? 'active' : ''}>
-              <ShowChart />
-            </button>
-            <button onClick={() => createShape({ shapeType: 'sides', color: '#fff000' })}>
-              <CallMade />
-            </button>
-          </div>
-          <ul>
-            {
-              shapeList && shapeList.map((i, index) => {
-                return (
-                  <li key={index} className={selected === index ?'active':''} onClick={() => {
-                    setSelected(index)
-                  }}>
-                    <p>spaceman</p>
-                    <Clear className='clear' onClick={(e) => {
-                      e.stopPropagation()
-                      deleteShape(index)
-                    }}/>
-                  </li>
-                )
-              })
-            }
-          </ul>
+      <div className='App-content'>
+        <Sketchpad
+          onReady={onReady}
+          setShapeList={setShapeList}
+          setSelected={setSelected}
+          shapeList={shapeList}
+          selected={selected}
+        />
+        <div className='App-tools'>
+          <Buttons
+            activeButton={activeButton}
+            createShape={createShape} />
+          <ShapeList
+            shapeList={shapeList}
+            selected={selected}
+            setSelected={setSelected}
+            deleteShape={deleteShape} />
         </div>
+        <h1>React<br />echarts<br />draw<br />mark</h1>
       </div>
-      <div className='App-Sketchpad'>
-        <MarkTool onReady={onReady} onChange={e => {
-          setShapeList([...e.shapeList])
-          setSelected(e.selected)
-        }} value={shapeList} selected={selected}></MarkTool>
-      </div>
-      <h1>React<br />echarts<br />draw<br />mark</h1>
+
     </div>
   )
 }
 
+const Buttons = (props) => {
+  return <div className='buttons'>
+    <button onClick={() => props.createShape({ shapeType: 'polygon' })} className={props.activeButton === 'polygon' ? 'active' : ''}>
+      <ChangeHistory style={{ transform: 'translateY(-0.03125rem)' }} />
+    </button>
+    <button onClick={() => props.createShape({ shapeType: 'line', color: '#fff000' })} className={props.activeButton === 'line' ? 'active' : ''}>
+      <ShowChart />
+    </button>
+    <button onClick={() => props.createShape({ shapeType: 'sides', color: '#fff000' })} className={props.activeButton === 'sides' ? 'active' : ''}>
+      <CallMade />
+    </button>
+  </div>
+}
+
+const ShapeList = (props) => {
+  return <ul>
+    {
+      props.shapeList && props.shapeList.map((i, index) => {
+        return (
+          <li key={index} className={props.selected === index ? 'active' : ''} onClick={() => {
+            props.setSelected(index)
+          }}>
+            <p>spaceman</p>
+            <Clear className='clear' onClick={(e) => {
+              e.stopPropagation()
+              props.deleteShape(index)
+            }} />
+          </li>
+        )
+      }).reverse()
+    }
+  </ul>
+}
+
+const Sketchpad = (props) => {
+  return <div className='App-Sketchpad-Wrap'>
+  <div className='App-Sketchpad'>
+    <MarkTool
+      onReady={props.onReady} onChange={e => {
+        props.setShapeList([...e.shapeList])
+        props.setSelected(e.selected)
+      }}
+      value={props.shapeList}
+      selected={props.selected} />
+  </div>
+  </div>
+}
 
 ReactDOM.render(<App />, document.getElementById('root'));
