@@ -7,7 +7,8 @@
   "scripts": {
     "clean": "rimraf ./lib",
     "build": "rollup -c config/rollup.config.js",
-    "start": "rollup -w -c config/rollup.config.dev.js"
+    "start": "rollup -w -c config/rollup.config.dev.js",
+    "test": "jest"
   },
   "repository": {
     "type": "git",
@@ -20,10 +21,13 @@
     "@material-ui/core": "^4.6.1",
     "@material-ui/icons": "^4.5.1",
     "@types/echarts": "^4.1.15",
+    "@types/jest": "^24.0.23",
     "@types/ramda": "^0.26.28",
     "@types/react": "^16.9.2",
     "@types/react-dom": "^16.9.0",
     "babel-loader": "^8.0.6",
+    "jest": "^24.9.0",
+    "jest-canvas-mock": "^2.2.0",
     "node-sass": "^4.13.0",
     "ramda": "^0.26.1",
     "react": "^16.9.0",
@@ -41,6 +45,7 @@
     "rollup-plugin-terser": "^5.1.1",
     "rollup-plugin-typescript2": "^0.24.0",
     "rollup-plugin-visualizer": "^2.5.4",
+    "ts-jest": "^24.1.0",
     "typescript": "^3.6.2"
   },
   "dependencies": {

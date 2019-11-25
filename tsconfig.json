@@ -3,6 +3,7 @@
         "jsx": "react",
         "module": "ES2015",
         "moduleResolution": "node",
+        "esModuleInterop": true,
         "allowSyntheticDefaultImports": true
     },
     "exclude": [
