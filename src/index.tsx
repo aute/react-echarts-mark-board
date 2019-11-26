@@ -7,21 +7,21 @@ import 'echarts/lib/component/graphic';
 import 'echarts/lib/component/markLine';
 import { useState, useReducer, useEffect } from "react";
 
-type Anchor = [number, number]
+export type Anchor = [number, number]
 
-type Anchors = Anchor[]
+export type Anchors = Anchor[]
 
-type ShapeType = 'line' | 'polygon' | 'sides'
+export type ShapeType = 'line' | 'polygon' | 'sides'
 
-type Shape = {
+export type Shape = {
   anchors: Anchors,
   color?: string,
   over: boolean,
   type: ShapeType,
-  data?: object
+  data?: any
 }
 
-type Props = {
+export type Props = {
   selected: number,
   value: Shape[],
   showGrid?: boolean,
@@ -29,11 +29,11 @@ type Props = {
     selected: number;
     shapeList: Shape[];
   }) => void,
-  onReady: (arg0: {
+  onReady?: (arg0: {
     createShape: (opt: {
       shapeType: ShapeType,
       color?: string,
-      data?: object
+      data?: any
     }) => void,
     deleteShape: (shapeType: number) => void;
   }) => void;
@@ -70,15 +70,19 @@ const chartInit = {
   },
   series: []
 }
-
+// TODO remove abs
 const getDistance = (anchor1: Anchor, anchor2: Anchor): number => {
   const s = Math.sqrt(Math.pow(Math.abs(anchor1[0] - anchor2[0]), 2) + Math.pow(Math.abs(anchor1[1] - anchor2[1]), 2))
   return s;
 }
-
+// TODO remove 100 , 归一化
 const getPoint = (e: React.MouseEvent<HTMLElement>): Anchor => {
-  const x = 100 * e.nativeEvent.offsetX / e.currentTarget.clientWidth;
-  const y = 100 * e.nativeEvent.offsetY / e.currentTarget.clientHeight;
+  const offsetX = e.nativeEvent.offsetX || 0
+  const offsetY = e.nativeEvent.offsetY || 0
+  const clientWidth = e.currentTarget.clientWidth || 0
+  const clientHeight = e.currentTarget.clientHeight || 0
+  const x = 100 * offsetX / clientWidth || 0;
+  const y = 100 * offsetY / clientHeight || 0;
   return [x, y];
 }
 
@@ -99,7 +103,7 @@ const setClose = (polygon: Anchors): Anchors => {
   return R.update(-1, magnetic(R.head(polygon), R.last(polygon)), polygon)
 }
 
-const Shape = (option: { shapeType: ShapeType; color?: string; data?: object }): Shape => {
+const Shape = (option: { shapeType: ShapeType; color?: string; data?: any }): Shape => {
   return {
     anchors: [],
     color: option.color,
@@ -122,7 +126,7 @@ function reducer(
     shapeOrdinal?: number;
     newShapeList?: Shape[];
     color?: string,
-    data?: object
+    data?: any
   }) {
   const { type, location, newShapeList, shapeOrdinal, shapeType, anchorOrdinal, color, data } = action
   let { shapeList, selected } = payload
@@ -157,7 +161,7 @@ function reducer(
         selected: shapeOrdinal
       }
       break
-
+      // TODO fix if
     case 'PUSH_ANCHOR':
       if (!selectedItem || selectedItem.over || !location) {
         break
@@ -216,18 +220,22 @@ function reducer(
       }
       break
     case 'LOAD':
+      selected = shapeOrdinal
+      if (!shapeOrdinal || shapeOrdinal < 0 || shapeOrdinal >= newShapeList.length) {
+        selected = 0
+      }  
       payload = {
-        selected: 0,
+        selected: selected,
         shapeList: newShapeList
       }
       break
   }
   return payload
 }
-
+// TODO default Props
 const MarkTool = (Props: Props) => {
   const [myChart, setMayChart] = useState<any | null>(null)
-  const [data, dispatch] = useReducer(reducer, { selected: 0, shapeList: Props.value });
+  const [data, dispatch] = useReducer(reducer, { selected: 0, shapeList: Props.value })
   chartInit.xAxis.splitLine.show = Boolean(Props.showGrid)
   chartInit.yAxis.splitLine.show = Boolean(Props.showGrid)
   useEffect(() => {
@@ -250,6 +258,7 @@ const MarkTool = (Props: Props) => {
             symbol: ['circle', 'triangle'],
             data: item.anchors[0] && [
               [{
+                // TODO fun
                 coord: [(item.anchors[0][0] + item.anchors[1][0]) / 2
                   - (item.anchors[0][1] - item.anchors[1][1]) / 4
                   * (myChart._dom.clientHeight / myChart._dom.clientWidth)
@@ -284,7 +293,6 @@ const MarkTool = (Props: Props) => {
         }
       }) : null
     }, true);
-
     Props.onChange(data)
   }, [data])
 
@@ -293,11 +301,13 @@ const MarkTool = (Props: Props) => {
   }, [Props.selected])
 
   useEffect(() => {
-    Props.onReady({
-      createShape,
-      deleteShape
-    })
-    dispatch({ type: 'LOAD', newShapeList: Props.value })
+    if (myChart) {
+      dispatch({ type: 'LOAD', newShapeList: Props.value, shapeOrdinal: Props.selected })
+      Props.onReady && Props.onReady({
+        createShape,
+        deleteShape
+      })
+    }
   }, [myChart])
 
   useEffect(() => {
@@ -309,7 +319,7 @@ const MarkTool = (Props: Props) => {
     dispatch({ type: mode, location })
   })
 
-  const createShape = (opt: { shapeType: ShapeType, color?: string, data?: object }) => {
+  const createShape = (opt: { shapeType: ShapeType, color?: string, data?: any }) => {
     dispatch({ type: 'CREATE_SHAPE', shapeType: opt.shapeType, color: opt.color, data: opt.data })
   }
 
@@ -321,9 +331,10 @@ const MarkTool = (Props: Props) => {
     onClick={R.compose(editAnchor('PUSH_ANCHOR'), getPoint)}
     onMouseMove={R.compose(editAnchor('MOVE_LAST_ANCHOR'), getPoint)}
     onDoubleClick={R.compose(editAnchor('OVER'), getPoint)}
+    data-testid="MarkTool"
   >
     <ReactEchartsCore
-    echarts={echarts}
+      echarts={echarts}
       onChartReady={setMayChart}
       option={chartInit}
       style={{ height: '100%', width: '100%' }}
@@ -331,4 +342,4 @@ const MarkTool = (Props: Props) => {
   </div>
 }
 
-export default MarkTool;
+export default MarkTool

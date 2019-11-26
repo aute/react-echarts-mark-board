@@ -8,7 +8,7 @@
     "clean": "rimraf ./lib",
     "build": "rollup -c config/rollup.config.js",
     "start": "rollup -w -c config/rollup.config.dev.js",
-    "test": "jest"
+    "test": "jest --coverage"
   },
   "repository": {
     "type": "git",
