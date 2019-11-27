@@ -95,7 +95,30 @@ test("createShape", () => {
     })
 });
 
-test("click", () => {
+test("deleteShape", () => {
+    let changeData = null;
+    act(() => {
+        render(<MarkTool
+            onReady={({ deleteShape }) => {
+                deleteShape(0)
+            }}
+            onChange={e => { changeData = e }}
+            value={[{ "anchors": [[0, 0], [0, 0]], "color": "#fff000", "over": false, "type": "polygon" }, { "anchors": [[0, 0], [0, 0]], "color": "#fff000", "over": false, "type": "polygon" }]}
+            selected={0} />, container)
+    });
+    expect(changeData).toStrictEqual({
+        shapeList:
+            [{
+                anchors: [[0, 0], [0, 0]],
+                color: '#fff000',
+                over: false,
+                type: 'polygon',
+            }],
+        selected: 0
+    })
+});
+
+test("line", () => {
     let changeData = null;
     act(() => {
         render(<MarkTool
@@ -108,11 +131,85 @@ test("click", () => {
     });
     const markTool = document.querySelector("[data-testid=MarkTool]");
     act(() => {
-        markTool.dispatchEvent(new MouseEvent("click", { 
+        markTool.dispatchEvent(new MouseEvent("click", {
             bubbles: true,
-         }));
+        }));
     });
-    console.log(changeData.shapeList[0].anchors);
-    
-    //expect(changeData).toStrictEqual({ selected: 0, shapeList: [] })
+    expect(JSON.stringify(changeData)).toStrictEqual('{"shapeList":[{"anchors":[[0,0],[0,0]],"color":"#fff000","over":false,"type":"line"}],"selected":0}')
+
+    act(() => {
+        markTool.dispatchEvent(new MouseEvent("click", {
+            bubbles: true,
+        }));
+        markTool.dispatchEvent(new MouseEvent("click", {
+            bubbles: true,
+        }));
+        markTool.dispatchEvent(new MouseEvent("dblclick", {
+            bubbles: true,
+        }));
+    });
+    expect(JSON.stringify(changeData)).toStrictEqual('{"shapeList":[{"anchors":[[0,0],[0,0]],"color":"#fff000","over":true,"type":"line"}],"selected":0}')
+});
+
+test("polygon", () => {
+    let changeData = null;
+    act(() => {
+        render(<MarkTool
+            onReady={({ createShape }) => {
+                createShape({ shapeType: 'polygon', color: '#fff000' })
+            }}
+            onChange={e => { changeData = e }}
+            value={[]}
+            selected={0} />, container)
+    });
+    const markTool = document.querySelector("[data-testid=MarkTool]");
+    act(() => {
+        markTool.dispatchEvent(new MouseEvent("click", {
+            bubbles: true,
+        }));
+    });
+    expect(JSON.stringify(changeData)).toStrictEqual('{"shapeList":[{"anchors":[[0,0],[0,0]],"color":"#fff000","over":false,"type":"polygon"}],"selected":0}')
+
+    act(() => {
+        markTool.dispatchEvent(new MouseEvent("click", {
+            bubbles: true,
+        }));
+        markTool.dispatchEvent(new MouseEvent("click", {
+            bubbles: true,
+        }));
+        markTool.dispatchEvent(new MouseEvent("click", {
+            bubbles: true,
+        }));
+        markTool.dispatchEvent(new MouseEvent("dblclick", {
+            bubbles: true,
+        }));
+    });
+    expect(JSON.stringify(changeData)).toStrictEqual('{"shapeList":[{"anchors":[[0,0],[0,0],[0,0]],"color":"#fff000","over":true,"type":"polygon"}],"selected":0}')
+});
+
+test("sides", () => {
+    let changeData = null;
+    act(() => {
+        render(<MarkTool
+            onReady={({ createShape }) => {
+                createShape({ shapeType: 'sides', color: '#fff000' })
+            }}
+            onChange={e => { changeData = e }}
+            value={[]}
+            selected={0} />, container)
+    });
+    const markTool = document.querySelector("[data-testid=MarkTool]");
+    act(() => {
+        markTool.dispatchEvent(new MouseEvent("click", {
+            bubbles: true,
+        }));
+    });
+    expect(JSON.stringify(changeData)).toStrictEqual('{"shapeList":[{"anchors":[[0,0],[0,0]],"color":"#fff000","over":false,"type":"sides"}],"selected":0}')
+
+    act(() => {
+        markTool.dispatchEvent(new MouseEvent("click", {
+            bubbles: true,
+        }));
+    });
+    expect(JSON.stringify(changeData)).toStrictEqual('{"shapeList":[{"anchors":[[0,0],[0,0]],"color":"#fff000","over":true,"type":"sides"}],"selected":0}')
 });
