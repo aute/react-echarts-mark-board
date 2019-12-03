@@ -2,7 +2,8 @@ import React from 'react'
 import { render, unmountComponentAtNode } from "react-dom"
 import { act } from "react-dom/test-utils"
 
-import MarkTool, { Shape } from '../index'
+import MarkTool from '../index'
+import { Shape } from "../types";
 
 let container = null
 beforeEach(() => {

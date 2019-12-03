@@ -3,113 +3,11 @@ import ReactEcharts from 'echarts-for-react';
 import * as R from "ramda";
 import echarts from 'echarts';
 
-export type Anchor = [number, number]
-
-export type Anchors = Anchor[]
-
-export type ShapeType = 'line' | 'polygon' | 'sides'
-
-export type Shape = {
-  anchors: Anchors,
-  color?: string,
-  over: boolean,
-  type: ShapeType,
-  data?: any
-}
-
-export interface Props {
-  selected: number,
-  value: Shape[],
-  showGrid?: boolean,
-  onChange: (data: {
-    selected: number;
-    shapeList: Shape[];
-  }) => void,
-  onReady?: (arg0: {
-    createShape: (opt: {
-      shapeType: ShapeType,
-      color?: string,
-      data?: any
-    }) => void,
-    deleteShape: (shapeType: number) => void;
-  }) => void;
-}
-
-const chartInit = {
-  grid: {
-    top: 0,
-    right: 1,
-    bottom: 1,
-    left: 0
-  },
-  xAxis: {
-    min: 0,
-    max: 100,
-    type: 'value',
-    splitLine: {
-      show: false
-    },
-    axisLine: {
-      lineStyle: { color: 'rgba(0,0,0,0)' }, onZero: false
-    }
-  },
-  yAxis: {
-    min: 0,
-    max: 100,
-    type: 'value',
-    splitLine: {
-      show: false
-    },
-    axisLine: {
-      lineStyle: { color: 'rgba(0,0,0,0)' }, onZero: false
-    }
-  },
-  series: []
-}
+import { Anchor, Anchors, Props, Shape, ShapeType } from './types';
+import { chartInitData, createShape, getPoint, isClose, setClose, } from './utils'
 
 const SYMBOL_SIZE = 14
 
-const getDistance = (anchor1: Anchor, anchor2: Anchor): number => {
-  const s = Math.sqrt(Math.pow(anchor1[0] - anchor2[0], 2) + Math.pow(anchor1[1] - anchor2[1], 2))
-  return s;
-}
-// TODO remove 100 , 归一化
-const getPoint = (e: React.MouseEvent<HTMLElement>): Anchor => {
-  const offsetX = e.nativeEvent.offsetX || 0
-  const offsetY = e.nativeEvent.offsetY || 0
-  const clientWidth = e.currentTarget.clientWidth || 0
-  const clientHeight = e.currentTarget.clientHeight || 0
-  const x = 100 * offsetX / clientWidth || 0;
-  const y = 100 * offsetY / clientHeight || 0;
-  return [x, y];
-}
-
-const magnetic = (staticPoint: Anchor, attractionPoint: Anchor): Anchor => {
-  const gravitation = 5
-  const distance = getDistance(staticPoint, attractionPoint)
-  if (gravitation - distance < 0) {
-    return attractionPoint
-  }
-  return staticPoint
-}
-
-const isClose = (polygon: Anchors): boolean => {
-  return R.equals(R.head(polygon), R.last(polygon))
-}
-
-const setClose = (polygon: Anchors): Anchors => {
-  return R.update(-1, magnetic(R.head(polygon), R.last(polygon)), polygon)
-}
-
-const Shape = (option: { shapeType: ShapeType; color?: string; data?: any }): Shape => {
-  return {
-    anchors: [],
-    color: option.color,
-    over: false,
-    type: option.shapeType,
-    data: option.data
-  }
-};
 
 function reducer(
   payload: {
@@ -132,7 +30,7 @@ function reducer(
   switch (type) {
     case 'CREATE_SHAPE':
       payload = {
-        shapeList: [...shapeList, Shape({
+        shapeList: [...shapeList, createShape({
           shapeType: shapeType ? shapeType : 'line',
           color,
           data
@@ -241,13 +139,13 @@ const MarkTool = ({ onChange, onReady, selected, showGrid = false, value }: Prop
     dispatch({ type: 'CHANGE_SELECTED', shapeOrdinal: selected })
   }, [selected])
 
-  chartInit.xAxis.splitLine.show = showGrid
-  chartInit.yAxis.splitLine.show = showGrid
+  chartInitData.xAxis.splitLine.show = showGrid
+  chartInitData.yAxis.splitLine.show = showGrid
 
   const [data, dispatch] = useReducer(reducer, { selected: 0, shapeList: value })
   useEffect(() => {
     myChart && myChart.setOption({
-      ...chartInit,
+      ...chartInitData,
       series: data.shapeList.map((item: { anchors: Anchors; type: string; color?: string; }, index: number) => {
         return {
           type: 'line',
@@ -336,7 +234,7 @@ const MarkTool = ({ onChange, onReady, selected, showGrid = false, value }: Prop
   >
     <ReactEcharts
       onChartReady={setMayChart}
-      option={chartInit}
+      option={chartInitData}
       style={{ height: '100%', width: '100%' }}
     />
   </div>
