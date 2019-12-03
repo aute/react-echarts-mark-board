@@ -17,7 +17,7 @@ export type Shape = {
   data?: any
 }
 
-export type Props = {
+export interface Props {
   selected: number,
   value: Shape[],
   showGrid?: boolean,
@@ -69,9 +69,8 @@ const chartInit = {
 
 const SYMBOL_SIZE = 14
 
-// TODO remove abs
 const getDistance = (anchor1: Anchor, anchor2: Anchor): number => {
-  const s = Math.sqrt(Math.pow(Math.abs(anchor1[0] - anchor2[0]), 2) + Math.pow(Math.abs(anchor1[1] - anchor2[1]), 2))
+  const s = Math.sqrt(Math.pow(anchor1[0] - anchor2[0], 2) + Math.pow(anchor1[1] - anchor2[1], 2))
   return s;
 }
 // TODO remove 100 , 归一化
@@ -160,7 +159,6 @@ function reducer(
         selected: shapeOrdinal
       }
       break
-      // TODO fix if
     case 'PUSH_ANCHOR':
       if (!selectedItem || selectedItem.over || !location) {
         break
@@ -222,7 +220,7 @@ function reducer(
       selected = shapeOrdinal
       if (!shapeOrdinal || shapeOrdinal < 0 || shapeOrdinal >= newShapeList.length) {
         selected = 0
-      }  
+      }
       payload = {
         selected: selected,
         shapeList: newShapeList
@@ -231,12 +229,22 @@ function reducer(
   }
   return payload
 }
-// TODO default Props
-const MarkTool = (Props: Props) => {
-  const [myChart, setMayChart] = useState<any | null>(null)
-  const [data, dispatch] = useReducer(reducer, { selected: 0, shapeList: Props.value })
-  chartInit.xAxis.splitLine.show = Boolean(Props.showGrid)
-  chartInit.yAxis.splitLine.show = Boolean(Props.showGrid)
+
+const MarkTool = ({ onChange, onReady, selected, showGrid = false, value }: Props) => {
+
+  useEffect(() => {
+    R.equals(data.shapeList, value) ||
+      dispatch({ type: 'LOAD', newShapeList: value })
+  }, [value])
+
+  useEffect(() => {
+    dispatch({ type: 'CHANGE_SELECTED', shapeOrdinal: selected })
+  }, [selected])
+
+  chartInit.xAxis.splitLine.show = showGrid
+  chartInit.yAxis.splitLine.show = showGrid
+
+  const [data, dispatch] = useReducer(reducer, { selected: 0, shapeList: value })
   useEffect(() => {
     myChart && myChart.setOption({
       ...chartInit,
@@ -292,27 +300,21 @@ const MarkTool = (Props: Props) => {
         }
       }) : null
     }, true);
-    Props.onChange(data)
+    onChange(data)
   }, [data])
 
-  useEffect(() => {
-    dispatch({ type: 'CHANGE_SELECTED', shapeOrdinal: Props.selected })
-  }, [Props.selected])
-
+  const [myChart, setMayChart] = useState<any | null>(null)
   useEffect(() => {
     if (myChart) {
-      dispatch({ type: 'LOAD', newShapeList: Props.value, shapeOrdinal: Props.selected })
-      Props.onReady && Props.onReady({
+      dispatch({ type: 'LOAD', newShapeList: value, shapeOrdinal: selected })
+      onReady && onReady({
         createShape,
         deleteShape
       })
     }
   }, [myChart])
 
-  useEffect(() => {
-    R.equals(data.shapeList, Props.value) ||
-      dispatch({ type: 'LOAD', newShapeList: Props.value })
-  }, [Props.value])
+
 
   const editAnchor = R.curry((mode: string, location: Anchor) => {
     dispatch({ type: mode, location })
