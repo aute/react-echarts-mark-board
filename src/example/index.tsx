@@ -13,7 +13,13 @@ const App = () => {
   const [activeButton, setActiveButton] = useState('')
 
   useEffect(() => {
-    shapeList[selected] && (!shapeList[selected].over ? setActiveButton(shapeList[selected].type) : setActiveButton(null))
+    shapeList[selected] ?
+    (
+      !shapeList[selected].over ? 
+      setActiveButton(shapeList[selected].type) : 
+      setActiveButton(null)
+      ) :
+    setActiveButton(null)
   }, [shapeList, selected])
 
 
