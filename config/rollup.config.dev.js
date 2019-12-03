@@ -26,6 +26,9 @@ export default {
                     target: "ES5",
                     allowSyntheticDefaultImports: true
                 },
+                exclude: [
+                    "node_modules","**/__test__"
+                ]
             },
             clean: true
         }),

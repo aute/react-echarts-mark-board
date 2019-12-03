@@ -9,7 +9,7 @@ export declare type Shape = {
     type: ShapeType;
     data?: any;
 };
-export declare type Props = {
+export interface Props {
     selected: number;
     value: Shape[];
     showGrid?: boolean;
@@ -25,6 +25,6 @@ export declare type Props = {
         }) => void;
         deleteShape: (shapeType: number) => void;
     }) => void;
-};
-declare const MarkTool: (Props: Props) => JSX.Element;
+}
+declare const MarkTool: ({ onChange, onReady, selected, showGrid, value }: Props) => JSX.Element;
 export default MarkTool;
