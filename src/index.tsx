@@ -3,130 +3,11 @@ import ReactEcharts from 'echarts-for-react';
 import * as R from "ramda";
 import echarts from 'echarts';
 
-import { Anchor, Anchors, Props, Shape, ShapeType } from './types';
-import { chartInitData, createShape, getPoint, isClose, setClose, } from './utils'
+import { Anchor, Props, Shape, ShapeType } from './types';
+import { chartInitData, getPoint, } from './utils'
+import { reducer } from './ common';
 
 const SYMBOL_SIZE = 14
-
-
-function reducer(
-  payload: {
-    selected: number,
-    shapeList: Shape[]
-  },
-  action: {
-    type: string;
-    location?: Anchor;
-    shapeType?: ShapeType;
-    anchorOrdinal?: number;
-    shapeOrdinal?: number;
-    newShapeList?: Shape[];
-    color?: string,
-    data?: any
-  }) {
-  const { type, location, newShapeList, shapeOrdinal, shapeType, anchorOrdinal, color, data } = action
-  let { shapeList, selected } = payload
-  let selectedItem = shapeList[selected]
-  switch (type) {
-    case 'CREATE_SHAPE':
-      payload = {
-        shapeList: [...shapeList, createShape({
-          shapeType: shapeType ? shapeType : 'line',
-          color,
-          data
-        })],
-        selected: shapeList.length
-      }
-      break
-    case 'DELETE_SHAPE':
-      if (typeof (shapeOrdinal) === "undefined") {
-        break
-      }
-      payload = {
-        shapeList: R.remove(shapeOrdinal, 1, shapeList),
-        selected: 0
-      }
-      break
-
-    case 'CHANGE_SELECTED':
-      if (typeof (shapeOrdinal) === "undefined") {
-        break
-      }
-      payload = {
-        ...payload,
-        selected: shapeOrdinal
-      }
-      break
-    case 'PUSH_ANCHOR':
-      if (!selectedItem || selectedItem.over || !location) {
-        break
-      }
-      if (selectedItem.anchors.length < 1) {
-        selectedItem.anchors.push(location)
-      }
-      if (selectedItem.type === 'polygon' && selectedItem.anchors.length > 3) {
-        selectedItem.anchors = setClose(selectedItem.anchors)
-        selectedItem.over = isClose(selectedItem.anchors)
-        if (selectedItem.over) {
-          payload = {
-            ...payload
-          }
-          break
-        }
-      }
-      if (selectedItem.type === 'sides' && selectedItem.anchors.length > 1) {
-        selectedItem.over = true
-        payload = { ...payload }
-        break
-      }
-      selectedItem.anchors.push(location)
-      payload = { ...payload }
-      break
-
-    case 'MOVE_LAST_ANCHOR':
-      if (selectedItem && !selectedItem.over && selectedItem.anchors.length > 0) {
-        selectedItem.anchors = R.update(-1, location, selectedItem.anchors);
-        payload = { ...payload }
-      }
-      break
-    case 'MOVE_ANCHOR':
-      if (selectedItem && selectedItem.anchors.length > 0 && typeof anchorOrdinal === 'number') {
-        selectedItem.anchors = R.update(anchorOrdinal, location, selectedItem.anchors);
-        if (selectedItem.type === 'polygon' && selectedItem.over && action.anchorOrdinal === selectedItem.anchors.length - 1) {
-          selectedItem.anchors = R.update(0, location, selectedItem.anchors);
-        }
-        payload = { ...payload }
-      }
-      break
-    case 'OVER':
-      if (selectedItem && !selectedItem.over && selectedItem.anchors.length > 0) {
-        selectedItem.anchors = R.slice(0, -2, selectedItem.anchors)
-        if (selectedItem.type === 'polygon' && selectedItem.anchors.length > 3) {
-          selectedItem.anchors = R.update(-1, R.head(selectedItem.anchors), selectedItem.anchors);
-        }
-        if (selectedItem.type === 'polygon' && selectedItem.anchors.length <= 3) {
-          break
-        }
-        if (selectedItem.type === 'line' && selectedItem.anchors.length < 2) {
-          break
-        }
-        selectedItem.over = true
-        payload = { ...payload }
-      }
-      break
-    case 'LOAD':
-      selected = shapeOrdinal
-      if (!shapeOrdinal || shapeOrdinal < 0 || shapeOrdinal >= newShapeList.length) {
-        selected = 0
-      }
-      payload = {
-        selected: selected,
-        shapeList: newShapeList
-      }
-      break
-  }
-  return payload
-}
 
 const MarkTool = ({ onChange, onReady, selected, showGrid = false, value }: Props) => {
 
@@ -146,7 +27,7 @@ const MarkTool = ({ onChange, onReady, selected, showGrid = false, value }: Prop
   useEffect(() => {
     myChart && myChart.setOption({
       ...chartInitData,
-      series: data.shapeList.map((item: { anchors: Anchors; type: string; color?: string; }, index: number) => {
+      series: data.shapeList.map((item: Shape, index: number) => {
         return {
           type: 'line',
           symbolSize: index === data.selected ? SYMBOL_SIZE : 0,
@@ -211,8 +92,6 @@ const MarkTool = ({ onChange, onReady, selected, showGrid = false, value }: Prop
       })
     }
   }, [myChart])
-
-
 
   const editAnchor = R.curry((mode: string, location: Anchor) => {
     dispatch({ type: mode, location })
