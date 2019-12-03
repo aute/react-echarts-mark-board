@@ -1,9 +1,9 @@
-import resolve from 'rollup-plugin-node-resolve';
+import resolve from '@rollup/plugin-node-resolve';
 import typescript from 'rollup-plugin-typescript2';
 import postcss from 'rollup-plugin-postcss';
 import serve from 'rollup-plugin-serve'
 import commonjs from 'rollup-plugin-commonjs';
-import replace from 'rollup-plugin-replace';
+import replace from '@rollup/plugin-replace';
 import livereload from 'rollup-plugin-livereload';
 import { terser } from 'rollup-plugin-terser';
 import progress from 'rollup-plugin-progress';

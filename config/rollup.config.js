@@ -1,5 +1,5 @@
 import external from 'rollup-plugin-peer-deps-external';
-import resolve from 'rollup-plugin-node-resolve';
+import resolve from '@rollup/plugin-node-resolve';
 import typescript from 'rollup-plugin-typescript2';
 import { terser } from 'rollup-plugin-terser';
 import filesize from 'rollup-plugin-filesize';
@@ -14,7 +14,7 @@ export default {
         format: 'es',
         sourcemap: false,
     }, ],
-    external: ['react', 'react-dom', 'echarts-for-react','echarts'],
+    external: ['react', 'react-dom', 'echarts-for-react', 'echarts','ramda'],
     plugins: [
         external(),
         typescript({
@@ -26,7 +26,7 @@ export default {
                     allowSyntheticDefaultImports: true
                 },
                 exclude: [
-                    "node_modules","src/docs"
+                    "node_modules","src/example","**/__test__"
                 ]
             },
             clean: true

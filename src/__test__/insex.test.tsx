@@ -177,6 +177,19 @@ test("polygon", () => {
         markTool.dispatchEvent(new MouseEvent("click", {
             bubbles: true,
         }));
+        markTool.dispatchEvent(new MouseEvent("dblclick", {
+            bubbles: true,
+        }));
+    });
+    expect(JSON.stringify(changeData)).toStrictEqual('{"shapeList":[{"anchors":[[0,0],[0,0]],"color":"#fff000","over":false,"type":"polygon"}],"selected":0}')
+
+    act(() => {
+        markTool.dispatchEvent(new MouseEvent("click", {
+            bubbles: true,
+        }));
+        markTool.dispatchEvent(new MouseEvent("click", {
+            bubbles: true,
+        }));
         markTool.dispatchEvent(new MouseEvent("click", {
             bubbles: true,
         }));
@@ -184,7 +197,7 @@ test("polygon", () => {
             bubbles: true,
         }));
     });
-    expect(JSON.stringify(changeData)).toStrictEqual('{"shapeList":[{"anchors":[[0,0],[0,0],[0,0]],"color":"#fff000","over":true,"type":"polygon"}],"selected":0}')
+    expect(JSON.stringify(changeData)).toStrictEqual('{"shapeList":[{"anchors":[[0,0],[0,0],[0,0],[0,0]],"color":"#fff000","over":true,"type":"polygon"}],"selected":0}')
 });
 
 test("sides", () => {

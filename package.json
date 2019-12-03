@@ -7,7 +7,7 @@
   "scripts": {
     "clean": "rimraf ./lib",
     "build": "rollup -c config/rollup.config.js",
-    "start": "rollup -w -c config/rollup.config.dev.js",
+    "start": "node --max_old_space_size=4096 node_modules/rollup/dist/bin/rollup -w -c config/rollup.config.dev.js",
     "test": "jest --coverage"
   },
   "repository": {
@@ -20,7 +20,9 @@
     "@babel/core": "^7.5.5",
     "@material-ui/core": "^4.6.1",
     "@material-ui/icons": "^4.5.1",
-    "@types/echarts": "^4.1.15",
+    "@rollup/plugin-node-resolve": "^6.0.0",
+    "@rollup/plugin-replace": "^2.2.1",
+    "@types/echarts": "^4.4.1",
     "@types/jest": "^24.0.23",
     "@types/ramda": "^0.26.28",
     "@types/react": "^16.9.2",
@@ -36,11 +38,9 @@
     "rollup-plugin-commonjs": "^10.1.0",
     "rollup-plugin-filesize": "^6.2.0",
     "rollup-plugin-livereload": "^1.0.4",
-    "rollup-plugin-node-resolve": "^5.2.0",
     "rollup-plugin-peer-deps-external": "^2.2.0",
     "rollup-plugin-postcss": "^2.0.3",
     "rollup-plugin-progress": "^1.1.1",
-    "rollup-plugin-replace": "^2.2.0",
     "rollup-plugin-serve": "^1.0.1",
     "rollup-plugin-terser": "^5.1.1",
     "rollup-plugin-typescript2": "^0.24.0",

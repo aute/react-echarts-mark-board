@@ -1,11 +1,7 @@
-import React from 'react'
-import ReactEchartsCore from 'echarts-for-react/lib/core';
+import React, { useState, useReducer, useEffect } from 'react'
+import ReactEcharts from 'echarts-for-react';
 import * as R from "ramda";
-import echarts from 'echarts/lib/echarts';
-import 'echarts/lib/chart/line';
-import 'echarts/lib/component/graphic';
-import 'echarts/lib/component/markLine';
-import { useState, useReducer, useEffect } from "react";
+import echarts from 'echarts';
 
 export type Anchor = [number, number]
 
@@ -70,6 +66,9 @@ const chartInit = {
   },
   series: []
 }
+
+const SYMBOL_SIZE = 14
+
 // TODO remove abs
 const getDistance = (anchor1: Anchor, anchor2: Anchor): number => {
   const s = Math.sqrt(Math.pow(Math.abs(anchor1[0] - anchor2[0]), 2) + Math.pow(Math.abs(anchor1[1] - anchor2[1]), 2))
@@ -169,7 +168,7 @@ function reducer(
       if (selectedItem.anchors.length < 1) {
         selectedItem.anchors.push(location)
       }
-      if (selectedItem.type === 'polygon' && selectedItem.anchors.length > 2) {
+      if (selectedItem.type === 'polygon' && selectedItem.anchors.length > 3) {
         selectedItem.anchors = setClose(selectedItem.anchors)
         selectedItem.over = isClose(selectedItem.anchors)
         if (selectedItem.over) {
@@ -244,7 +243,7 @@ const MarkTool = (Props: Props) => {
       series: data.shapeList.map((item: { anchors: Anchors; type: string; color?: string; }, index: number) => {
         return {
           type: 'line',
-          symbolSize: index === data.selected ? 14 : 0,
+          symbolSize: index === data.selected ? SYMBOL_SIZE : 0,
           data: item.anchors.map(i => {
             return [i[0], 100 - i[1]]
           }),
@@ -282,7 +281,7 @@ const MarkTool = (Props: Props) => {
         return {
           type: 'circle',
           position: myChart.convertToPixel('grid', [item[0], 100 - item[1]]),
-          shape: { cx: 0, cy: 0, r: 5 },
+          shape: { cx: 0, cy: 0, r: SYMBOL_SIZE },
           invisible: true,
           draggable: true,
           ondrag: echarts['util'].curry(function (this: any, dataIndex: number) {
@@ -333,8 +332,7 @@ const MarkTool = (Props: Props) => {
     onDoubleClick={R.compose(editAnchor('OVER'), getPoint)}
     data-testid="MarkTool"
   >
-    <ReactEchartsCore
-      echarts={echarts}
+    <ReactEcharts
       onChartReady={setMayChart}
       option={chartInit}
       style={{ height: '100%', width: '100%' }}
