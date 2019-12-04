@@ -1,6 +1,6 @@
 import React from 'react'
 import ReactDOM from 'react-dom';
-import { ChangeHistory, ShowChart, CallMade, Clear } from '@material-ui/icons';
+import { ChangeHistory, ShowChart, CallMade, Clear, GitHub } from '@material-ui/icons';
 import MarkBoard from '../index'
 import { useState, useEffect, useRef } from "react";
 import { shapeListInitData } from "./data";
@@ -55,7 +55,12 @@ const App = () => {
         </div>
         <h1>React<br />echarts<br />mark<br />board</h1>
       </div>
-
+      <a className='GitHub-icon' href="https://github.com/aute/react-echarts-mark-board">
+        <GitHub /><span>GitHub</span>
+      </a>
+      <footer>
+        Aute
+      </footer>
     </div>
   )
 }
