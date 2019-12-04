@@ -3,11 +3,12 @@ import ReactDOM from 'react-dom';
 import { ChangeHistory, ShowChart, CallMade, Clear } from '@material-ui/icons';
 import MarkTool from '../index'
 import { useState, useEffect, useRef } from "react";
+import { shapeListInitData } from "./data";
 import './App.scss';
 
 const App = () => {
   const markTool = useRef(null)
-  const [shapeList, setShapeList] = useState([])
+  const [shapeList, setShapeList] = useState(shapeListInitData)
   const [selected, setSelected] = useState(0)
 
   const [activeButton, setActiveButton] = useState('')
@@ -29,7 +30,7 @@ const App = () => {
   const createShape = (p, color?: string) => {
     markTool.current.createShape(p, color)
   }
-  const deleteShape = (n) => {
+  const deleteShape = (n:number) => {
     markTool.current.deleteShape(n)
   }
   return (
@@ -61,7 +62,7 @@ const App = () => {
 
 const Buttons = (props) => {
   return <div className='buttons'>
-    <button onClick={() => props.createShape({ shapeType: 'polygon' })} className={props.activeButton === 'polygon' ? 'active' : ''}>
+    <button onClick={() => props.createShape({ shapeType: 'polygon', color:'#14FF8E' })} className={props.activeButton === 'polygon' ? 'active' : ''}>
       <ChangeHistory style={{ transform: 'translateY(-0.03125rem)' }} />
     </button>
     <button onClick={() => props.createShape({ shapeType: 'line', color: '#fff000' })} className={props.activeButton === 'line' ? 'active' : ''}>
@@ -76,7 +77,7 @@ const Buttons = (props) => {
 const ShapeList = (props) => {
   return <ul>
     {
-      props.shapeList && props.shapeList.map((i, index) => {
+      props.shapeList && props.shapeList.map((i, index:number) => {
         return (
           <li key={index} className={props.selected === index ? 'active' : ''} onClick={() => {
             props.setSelected(index)
