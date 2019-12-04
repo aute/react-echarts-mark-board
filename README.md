@@ -77,3 +77,7 @@ $ npm publish
 ## TODO
 [TODO.md](./TODO.md)
 
+<video id="video">
+      <source id="mp4" src="https://aute.github.io/react-echarts-mark-board/demo.mp4" type="video/mp4">
+</video>
+
