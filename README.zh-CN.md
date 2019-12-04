@@ -42,6 +42,16 @@ import reactEchartsDrawMark from 'react-echarts-mark-board';
 ```
 
 ## 📑  文档
+API 文档待补齐，先期可通过
+
+```
+.
+├── src
+    └── example 
+
+```
+即 [demo 页面](https://aute.github.io/react-echarts-mark-board) 源码，查看使用方式
+
 - #### [API](./api.zh-CN.md)
 - #### [lib statistics](https://aute.github.io/react-echarts-mark-board/statistics)
 - #### [test coverage](https://aute.github.io/react-echarts-mark-board/coverage/lcov-report/)
