@@ -14,12 +14,12 @@ const App = () => {
 
   useEffect(() => {
     shapeList[selected] ?
-    (
-      !shapeList[selected].over ? 
-      setActiveButton(shapeList[selected].type) : 
-      setActiveButton(null)
+      (
+        !shapeList[selected].over ?
+          setActiveButton(shapeList[selected].type) :
+          setActiveButton(null)
       ) :
-    setActiveButton(null)
+      setActiveButton(null)
   }, [shapeList, selected])
 
 
@@ -95,15 +95,17 @@ const ShapeList = (props) => {
 
 const Sketchpad = (props) => {
   return <div className='App-Sketchpad-Wrap'>
-  <div className='App-Sketchpad'>
-    <MarkTool
-      onReady={props.onReady} onChange={e => {
-        props.setShapeList([...e.shapeList])
-        props.setSelected(e.selected)
-      }}
-      value={props.shapeList}
-      selected={props.selected} />
-  </div>
+    <div className='App-Sketchpad'>
+      <MarkTool
+        lineWidth={6}
+        onReady={props.onReady}
+        onChange={e => {
+          props.setShapeList([...e.shapeList])
+          props.setSelected(e.selected)
+        }}
+        selected={props.selected}
+        value={props.shapeList} />
+    </div>
   </div>
 }
 

@@ -9,7 +9,7 @@ import { reducer } from './ common';
 
 const SYMBOL_SIZE = 14
 
-export default ({ onChange, onReady, selected, showGrid = false, value }: Props) => {
+export default ({ onChange, onReady, selected, showGrid = false, value, lineWidth = 2 }: Props) => {
 
   useEffect(() => {
     R.equals(data.shapeList, value) || dispatch({ type: 'LOAD', newShapeList: value })
@@ -40,12 +40,19 @@ export default ({ onChange, onReady, selected, showGrid = false, value }: Props)
               }),
               lineStyle: {
                 color: item.color,
+                width: lineWidth,
               },
               itemStyle: {
                 color: item.color,
               },
               markLine: item.type === 'sides' && {
+                silent: true,
                 symbol: ['circle', 'triangle'],
+                symbolSize: R.max(12, lineWidth * 2.4),
+                lineStyle: {
+                  type: 'solid',
+                  width: lineWidth,
+                },
                 // TODO optimize
                 data: item.anchors[0] && [
                   [{

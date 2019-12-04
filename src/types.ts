@@ -12,6 +12,7 @@ export interface Props {
     selected: number;
     value: Shape[];
     showGrid?: boolean;
+    lineWidth?: number;
     onChange: (data: {
         selected: number;
         shapeList: Shape[];
