@@ -62,7 +62,8 @@ export default ({ onChange, onReady, selected, showGrid = false, value, lineWidt
                     coord: getSides(item.anchors as [Anchor, Anchor], winRatio)[1]
                   }]
                 ]
-              }
+              },
+              clip: false,
             }
           }),
         graphic: selectedShape ? selectedShape.anchors.map(
@@ -85,8 +86,8 @@ export default ({ onChange, onReady, selected, showGrid = false, value, lineWidt
             }
           }) : null
       }, true);
+      onChange(data)
     }
-    onChange(data)
   }, [data])
 
   const [myChart, setMayChart] = useState<any | null>(null)
