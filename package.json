@@ -1,6 +1,6 @@
 {
   "name": "react-echarts-mark-board",
-  "version": "0.0.1",
+  "version": "0.0.1-beta.0",
   "description": "",
   "main": "lib/index.js",
   "type": "lib/@index.d.ts",
