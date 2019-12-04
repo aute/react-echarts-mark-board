@@ -33,7 +33,9 @@ import ReactReactDrawMark from 'react-echarts-mark-board';
 
 
 ## Documents
-[API](./api.md)
+- #### [API](./api.md)
+- #### [lib statistics](https://aute.github.io/react-echarts-mark-board/statistics)
+- #### [test coverage](https://aute.github.io/react-echarts-mark-board/coverage/lcov-report/)
 
 ## Contribution Guide
 
