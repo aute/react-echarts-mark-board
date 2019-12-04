@@ -5,15 +5,14 @@ English | [简体中文](./README.zh-CN.md)
 The library
 
 ## DEMO
-[DEMO](https://aute.github.io/react-echarts-mark-board)
+#### 👉 [DEMO](https://aute.github.io/react-echarts-mark-board)
 ![demo](./demo.gif)
 
 ## Directory
 ```
-├── lib - Compiler output code
-├── docs - Example
+├── lib - output code
+├── docs - Example and docs
 ├── src - Source code directory
-├── test - Unit tests
 ├── CHANGELOG.md - Change log
 └── TODO.md - Planned features
 ```
@@ -56,8 +55,6 @@ To run unit tests:
 ```bash
 $ npm test
 ```
-
-> Note: The browser environment needs to be tested manually under ```test/browser```
 
 Modify the version number in package.json, modify the version number in README.md, modify the CHANGELOG.md, and then release the new version.
 

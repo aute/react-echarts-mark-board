@@ -1,13 +1,21 @@
 # [react-echarts-mark-board](https://github.com/aute/react-echarts-mark-board)
 [English](./README.md) | 简体中文
 
-react-echarts-mark-board
+react-echarts-mark-board 是基于 React 标注绘制工具，支持绘制线段、方向及封闭图形
 
-## :star: 特性
+## 例子
+#### 👉 [例子](https://aute.github.io/react-echarts-mark-board)
+![demo](./demo.gif)
 
-- react-echarts-mark-board
+## ⭐️ 特性
 
-## :open_file_folder: 目录介绍
+- 进行线段、方向及封闭图形的绘制，可应用于计算机视觉相关项目标注工作
+- 基于 React 及 TypeScript
+- 相关系统大量采用 eCharts 进行数据展示，基于 eCharts 绘图减少依赖大小（视需求进行无第三方绘图依赖版本开发）
+- 无外部样式，内部样式如线段、方向及封闭图形支持颜色、宽度自定义
+- 自适应父元素大小，数据以归一化形式返回
+
+## 📂 目录介绍
 
 ```
 .
@@ -18,7 +26,7 @@ react-echarts-mark-board
 └── TODO.md 计划功能
 ```
 
-## :rocket: 使用者指南
+## 🚀  使用者指南
 
 通过npm下载安装代码
 
@@ -26,17 +34,16 @@ react-echarts-mark-board
 $ npm install --save react-echarts-mark-board
 ```
 
-
 如果你是webpack等环境
 
 ```js
 import reactEchartsDrawMark from 'react-echarts-mark-board';
 ```
 
-## :bookmark_tabs: 文档
-[API](./api.zh-CN.md)
+## 📑  文档
+#### [API](./api.zh-CN.md)
 
-## :kissing_heart: 贡献者指南
+## 😘 贡献者指南
 
 首次运行需要先安装依赖
 
@@ -69,9 +76,9 @@ $ npm publish
 ```
 
 
-## :gear: 更新日志
+## ⚙️ 更新日志
 [CHANGELOG.md](./CHANGELOG.md)
 
-## :airplane: 计划列表
+## ✈️ 计划列表
 [TODO.md](./TODO.md)
 
