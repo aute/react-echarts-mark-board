@@ -10,7 +10,7 @@ export const chartInitData = {
   },
   xAxis: {
     min: 0,
-    max: 100,
+    max: 1,
     type: 'value',
     splitLine: {
       show: false
@@ -21,7 +21,7 @@ export const chartInitData = {
   },
   yAxis: {
     min: 0,
-    max: 100,
+    max: 1,
     inverse:true,
     type: 'value',
     splitLine: {
@@ -39,19 +39,18 @@ export const getDistance = (anchor1: Anchor, anchor2: Anchor): number => {
   return s;
 }
 
-// TODO remove 100 , 归一化
 export const getPoint = (e: React.MouseEvent<HTMLElement>): Anchor => {
   const offsetX = e.nativeEvent.offsetX || 0
   const offsetY = e.nativeEvent.offsetY || 0
   const clientWidth = e.currentTarget.clientWidth || 0
   const clientHeight = e.currentTarget.clientHeight || 0
-  const x = 100 * offsetX / clientWidth || 0;
-  const y = 100 * offsetY / clientHeight || 0;
+  const x = offsetX / clientWidth || 0;
+  const y = offsetY / clientHeight || 0;
   return [x, y];
 }
 
 export const magnetic = (staticPoint: Anchor, attractionPoint: Anchor): Anchor => {
-  const gravitation = 5
+  const gravitation = 0.05
   const distance = getDistance(staticPoint, attractionPoint)
   if (gravitation - distance < 0) {
     return attractionPoint

@@ -12,7 +12,7 @@ react-echarts-draw-mark
 ```
 .
 ├── lib 编译产出代码
-├── docs 展示例子
+├── docs 例子及文档
 ├── src 源代码目录
 ├── CHANGELOG.md 变更日志
 └── TODO.md 计划功能

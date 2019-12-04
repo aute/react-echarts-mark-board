@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1575426957106" clover="3.2.0">
-  <project timestamp="1575426957106" name="All files">
+<coverage generated="1575430280814" clover="3.2.0">
+  <project timestamp="1575430280814" name="All files">
     <metrics statements="128" coveredstatements="110" conditionals="100" coveredconditionals="73" methods="20" coveredmethods="19" elements="248" coveredelements="202" complexity="0" loc="128" ncloc="128" packages="1" files="3" classes="3"/>
     <file name=" common.ts" path="/Users/aote/Desktop/react-echarts-draw-mark/src/ common.ts">
       <metrics statements="61" coveredstatements="46" conditionals="68" coveredconditionals="44" methods="1" coveredmethods="1"/>
@@ -115,29 +115,29 @@
       <line num="37" count="1" type="stmt"/>
       <line num="38" count="1" type="stmt"/>
       <line num="39" count="1" type="stmt"/>
-      <line num="43" count="1" type="stmt"/>
+      <line num="42" count="1" type="stmt"/>
+      <line num="43" count="14" type="cond" truecount="2" falsecount="0"/>
       <line num="44" count="14" type="cond" truecount="2" falsecount="0"/>
       <line num="45" count="14" type="cond" truecount="2" falsecount="0"/>
       <line num="46" count="14" type="cond" truecount="2" falsecount="0"/>
       <line num="47" count="14" type="cond" truecount="2" falsecount="0"/>
       <line num="48" count="14" type="cond" truecount="2" falsecount="0"/>
-      <line num="49" count="14" type="cond" truecount="2" falsecount="0"/>
-      <line num="50" count="14" type="stmt"/>
+      <line num="49" count="14" type="stmt"/>
+      <line num="52" count="1" type="stmt"/>
       <line num="53" count="1" type="stmt"/>
       <line num="54" count="1" type="stmt"/>
-      <line num="55" count="1" type="stmt"/>
-      <line num="56" count="1" type="cond" truecount="1" falsecount="1"/>
-      <line num="57" count="0" type="stmt"/>
-      <line num="59" count="1" type="stmt"/>
+      <line num="55" count="1" type="cond" truecount="1" falsecount="1"/>
+      <line num="56" count="0" type="stmt"/>
+      <line num="58" count="1" type="stmt"/>
+      <line num="61" count="1" type="stmt"/>
       <line num="62" count="1" type="stmt"/>
-      <line num="63" count="1" type="stmt"/>
+      <line num="65" count="1" type="stmt"/>
       <line num="66" count="1" type="stmt"/>
-      <line num="67" count="1" type="stmt"/>
-      <line num="70" count="1" type="stmt"/>
-      <line num="71" count="4" type="stmt"/>
-      <line num="80" count="1" type="stmt"/>
-      <line num="81" count="4" type="stmt"/>
-      <line num="83" count="4" type="stmt"/>
+      <line num="69" count="1" type="stmt"/>
+      <line num="70" count="4" type="stmt"/>
+      <line num="79" count="1" type="stmt"/>
+      <line num="80" count="4" type="stmt"/>
+      <line num="82" count="4" type="stmt"/>
     </file>
   </project>
 </coverage>
