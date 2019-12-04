@@ -1,11 +1,11 @@
-# [react-echarts-draw-mark](https://github.com/aute/react-echarts-draw-mark)
+# [react-echarts-mark-board](https://github.com/aute/react-echarts-mark-board)
 [English](./README.md) | 简体中文
 
-react-echarts-draw-mark
+react-echarts-mark-board
 
 ## :star: 特性
 
-- react-echarts-draw-mark
+- react-echarts-mark-board
 
 ## :open_file_folder: 目录介绍
 
@@ -23,14 +23,14 @@ react-echarts-draw-mark
 通过npm下载安装代码
 
 ```bash
-$ npm install --save react-echarts-draw-mark
+$ npm install --save react-echarts-mark-board
 ```
 
 
 如果你是webpack等环境
 
 ```js
-import reactEchartsDrawMark from 'react-echarts-draw-mark';
+import reactEchartsDrawMark from 'react-echarts-mark-board';
 ```
 
 ## :bookmark_tabs: 文档

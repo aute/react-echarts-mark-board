@@ -49,7 +49,7 @@ export default {
 
         visualizer({
             filename: './docs/statistics.html',
-            title: 'react-echarts-draw-mark Bundle',
+            title: 'react-echarts-mark-board Bundle',
         }),
     ],
 };

@@ -1,7 +1,7 @@
 import React from 'react'
 import ReactDOM from 'react-dom';
 import { ChangeHistory, ShowChart, CallMade, Clear } from '@material-ui/icons';
-import MarkTool from '../index'
+import MarkBoard from '../index'
 import { useState, useEffect, useRef } from "react";
 import { shapeListInitData } from "./data";
 import './App.scss';
@@ -53,7 +53,7 @@ const App = () => {
             setSelected={setSelected}
             deleteShape={deleteShape} />
         </div>
-        <h1>React<br />echarts<br />draw<br />mark</h1>
+        <h1>React<br />echarts<br />mark<br />board</h1>
       </div>
 
     </div>
@@ -97,7 +97,7 @@ const ShapeList = (props) => {
 const Sketchpad = (props) => {
   return <div className='App-Sketchpad-Wrap'>
     <div className='App-Sketchpad'>
-      <MarkTool
+      <MarkBoard
         lineWidth={6}
         onReady={props.onReady}
         onChange={e => {

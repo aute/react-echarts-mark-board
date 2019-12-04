@@ -1,11 +1,11 @@
-# [react-echarts-draw-mark](https://github.com/aute/react-echarts-draw-mark)
+# [react-echarts-mark-board](https://github.com/aute/react-echarts-mark-board)
 
 English | [简体中文](./README.zh-CN.md)
 
 The library
 
 ## DEMO
-[DEMO](https://aute.github.io/react-echarts-draw-mark)
+[DEMO](https://aute.github.io/react-echarts-mark-board)
 
 ## Directory
 ```
@@ -22,13 +22,13 @@ The library
 Using npm, download and install the code. 
 
 ```bash
-$ npm install --save react-echarts-draw-mark
+$ npm install --save react-echarts-mark-board
 ```
 
 For webpack or similar environment：
 
 ```js
-import ReactReactDrawMark from 'react-echarts-draw-mark';
+import ReactReactDrawMark from 'react-echarts-mark-board';
 ```
 
 

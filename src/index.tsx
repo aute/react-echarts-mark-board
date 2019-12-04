@@ -114,7 +114,7 @@ export default ({ onChange, onReady, selected, showGrid = false, value, lineWidt
     onClick={R.compose(editAnchor('PUSH_ANCHOR'), getPoint)}
     onMouseMove={R.compose(editAnchor('MOVE_LAST_ANCHOR'), getPoint)}
     onDoubleClick={R.compose(editAnchor('OVER'), getPoint)}
-    data-testid="MarkTool"
+    data-testid="MarkBoard"
   >
     <ReactEcharts
       onChartReady={setMayChart}
