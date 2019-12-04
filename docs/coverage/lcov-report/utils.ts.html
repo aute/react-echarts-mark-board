@@ -20,9 +20,9 @@
     </h1>
     <div class='clearfix'>
       <div class='fl pad1y space-right2'>
-        <span class="strong">96% </span>
+        <span class="strong">96.97% </span>
         <span class="quiet">Statements</span>
-        <span class='fraction'>24/25</span>
+        <span class='fraction'>32/33</span>
       </div>
       <div class='fl pad1y space-right2'>
         <span class="strong">92.86% </span>
@@ -32,12 +32,12 @@
       <div class='fl pad1y space-right2'>
         <span class="strong">100% </span>
         <span class="quiet">Functions</span>
-        <span class='fraction'>6/6</span>
+        <span class='fraction'>7/7</span>
       </div>
       <div class='fl pad1y space-right2'>
-        <span class="strong">96% </span>
+        <span class="strong">96.43% </span>
         <span class="quiet">Lines</span>
-        <span class='fraction'>24/25</span>
+        <span class='fraction'>27/28</span>
       </div>
     </div>
     <p class="quiet">
@@ -122,10 +122,27 @@
 <a name='L74'></a><a href='#L74'>74</a>
 <a name='L75'></a><a href='#L75'>75</a>
 <a name='L76'></a><a href='#L76'>76</a>
-<a name='L77'></a><a href='#L77'>77</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
+<a name='L77'></a><a href='#L77'>77</a>
+<a name='L78'></a><a href='#L78'>78</a>
+<a name='L79'></a><a href='#L79'>79</a>
+<a name='L80'></a><a href='#L80'>80</a>
+<a name='L81'></a><a href='#L81'>81</a>
+<a name='L82'></a><a href='#L82'>82</a>
+<a name='L83'></a><a href='#L83'>83</a>
+<a name='L84'></a><a href='#L84'>84</a>
+<a name='L85'></a><a href='#L85'>85</a>
+<a name='L86'></a><a href='#L86'>86</a>
+<a name='L87'></a><a href='#L87'>87</a>
+<a name='L88'></a><a href='#L88'>88</a>
+<a name='L89'></a><a href='#L89'>89</a>
+<a name='L90'></a><a href='#L90'>90</a>
+<a name='L91'></a><a href='#L91'>91</a>
+<a name='L92'></a><a href='#L92'>92</a>
+<a name='L93'></a><a href='#L93'>93</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -198,89 +215,120 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import * as R from "ramda";
 import { Anchor, Anchors, Shape, ShapeType } from "./types";
 &nbsp;
 export const chartInitData = {
-    grid: {
-        top: 0,
-        right: 1,
-        bottom: 1,
-        left: 0
+  grid: {
+    top: 0,
+    right: 1,
+    bottom: 1,
+    left: 0
+  },
+  xAxis: {
+    min: 0,
+    max: 100,
+    type: 'value',
+    splitLine: {
+      show: false
     },
-    xAxis: {
-        min: 0,
-        max: 100,
-        type: 'value',
-        splitLine: {
-            show: false
-        },
-        axisLine: {
-            lineStyle: { color: 'rgba(0,0,0,0)' }, onZero: false
-        }
+    axisLine: {
+      lineStyle: { color: 'rgba(0,0,0,0)' }, onZero: false
+    }
+  },
+  yAxis: {
+    min: 0,
+    max: 100,
+    inverse:true,
+    type: 'value',
+    splitLine: {
+      show: false
     },
-    yAxis: {
-        min: 0,
-        max: 100,
-        type: 'value',
-        splitLine: {
-            show: false
-        },
-        axisLine: {
-            lineStyle: { color: 'rgba(0,0,0,0)' }, onZero: false
-        }
-    },
-    series: []
+    axisLine: {
+      lineStyle: { color: 'rgba(0,0,0,0)' }, onZero: false
+    }
+  },
+  series: []
 }
 &nbsp;
 export const getDistance = (anchor1: Anchor, anchor2: Anchor): number =&gt; {
-    const s = Math.sqrt(Math.pow(anchor1[0] - anchor2[0], 2) + Math.pow(anchor1[1] - anchor2[1], 2))
-    return s;
+  const s = Math.sqrt(Math.pow(anchor1[0] - anchor2[0], 2) + Math.pow(anchor1[1] - anchor2[1], 2))
+  return s;
 }
 &nbsp;
 // TODO remove 100 , 归一化
 export const getPoint = (e: React.MouseEvent&lt;HTMLElement&gt;): Anchor =&gt; {
-    const offsetX = e.nativeEvent.offsetX || 0
-    const offsetY = e.nativeEvent.offsetY || 0
-    const clientWidth = e.currentTarget.clientWidth || 0
-    const clientHeight = e.currentTarget.clientHeight || 0
-    const x = 100 * offsetX / clientWidth || 0;
-    const y = 100 * offsetY / clientHeight || 0;
-    return [x, y];
-  }
+  const offsetX = e.nativeEvent.offsetX || 0
+  const offsetY = e.nativeEvent.offsetY || 0
+  const clientWidth = e.currentTarget.clientWidth || 0
+  const clientHeight = e.currentTarget.clientHeight || 0
+  const x = 100 * offsetX / clientWidth || 0;
+  const y = 100 * offsetY / clientHeight || 0;
+  return [x, y];
+}
 &nbsp;
-  export const magnetic = (staticPoint: Anchor, attractionPoint: Anchor): Anchor =&gt; {
-    const gravitation = 5
-    const distance = getDistance(staticPoint, attractionPoint)
-    <span class="missing-if-branch" title="if path not taken" >I</span>if (gravitation - distance &lt; 0) {
-<span class="cstat-no" title="statement not covered" >      return attractionPoint</span>
-    }
-    return staticPoint
+export const magnetic = (staticPoint: Anchor, attractionPoint: Anchor): Anchor =&gt; {
+  const gravitation = 5
+  const distance = getDistance(staticPoint, attractionPoint)
+  <span class="missing-if-branch" title="if path not taken" >I</span>if (gravitation - distance &lt; 0) {
+<span class="cstat-no" title="statement not covered" >    return attractionPoint</span>
   }
-  
-  export const isClose = (polygon: Anchors): boolean =&gt; {
-    return R.equals(R.head(polygon), R.last(polygon))
+  return staticPoint
+}
+&nbsp;
+export const isClose = (polygon: Anchors): boolean =&gt; {
+  return R.equals(R.head(polygon), R.last(polygon))
+}
+&nbsp;
+export const setClose = (polygon: Anchors): Anchors =&gt; {
+  return R.update(-1, magnetic(R.head(polygon), R.last(polygon)), polygon)
+}
+&nbsp;
+export const createShape = (option: { shapeType: ShapeType; color?: string; data?: any }): Shape =&gt; {
+  return {
+    anchors: [],
+    color: option.color,
+    over: false,
+    type: option.shapeType,
+    data: option.data
   }
-  
-  export const setClose = (polygon: Anchors): Anchors =&gt; {
-    return R.update(-1, magnetic(R.head(polygon), R.last(polygon)), polygon)
-  }
-  
-  export const createShape = (option: { shapeType: ShapeType; color?: string; data?: any }): Shape =&gt; {
-    return {
-      anchors: [],
-      color: option.color,
-      over: false,
-      type: option.shapeType,
-      data: option.data
-    }
-  };</pre></td></tr>
+};
+&nbsp;
+export const getSides = (line:[Anchor, Anchor], viewRatio:number): [Anchor, Anchor] =&gt; {
+  const [[startX, startY], [endX, endY]] = line
+&nbsp;
+  return [
+    [
+      (startX + endX) / 2 - (startY - endY) / 4 / viewRatio,
+      (startY + endY) / 2 + (startX - endX) / 4 * viewRatio
+    ],
+    [
+      (startX + endX) / 2 + (startY - endY) / 4 / viewRatio,
+      (startY + endY) / 2 - (startX - endX) / 4 * viewRatio
+    ]
+  ]
+};</pre></td></tr>
 </table></pre>
 <div class='push'></div><!-- for sticky footer -->
 </div><!-- /wrapper -->
 <div class='footer quiet pad2 space-top1 center small'>
   Code coverage
-  generated by <a href="https://istanbul.js.org/" target="_blank">istanbul</a> at Tue Dec 03 2019 17:25:05 GMT+0800 (GMT+08:00)
+  generated by <a href="https://istanbul.js.org/" target="_blank">istanbul</a> at Wed Dec 04 2019 10:35:57 GMT+0800 (GMT+08:00)
 </div>
 </div>
 <script src="prettify.js"></script>

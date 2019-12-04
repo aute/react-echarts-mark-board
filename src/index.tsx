@@ -46,6 +46,7 @@ export default ({ onChange, onReady, selected, showGrid = false, value }: Props)
               },
               markLine: item.type === 'sides' && {
                 symbol: ['circle', 'triangle'],
+                // TODO optimize
                 data: item.anchors[0] && [
                   [{
                     coord: getSides(item.anchors as [Anchor, Anchor], winRatio)[0]

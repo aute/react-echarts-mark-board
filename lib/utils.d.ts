@@ -24,6 +24,7 @@ export declare const chartInitData: {
     yAxis: {
         min: number;
         max: number;
+        inverse: boolean;
         type: string;
         splitLine: {
             show: boolean;
@@ -47,3 +48,4 @@ export declare const createShape: (option: {
     color?: string;
     data?: any;
 }) => Shape;
+export declare const getSides: (line: [Anchor, Anchor], viewRatio: number) => [Anchor, Anchor];

@@ -1,4 +1,4 @@
 /// <reference types="react" />
 import { Props } from './types';
-declare const MarkTool: ({ onChange, onReady, selected, showGrid, value }: Props) => JSX.Element;
-export default MarkTool;
+declare const _default: ({ onChange, onReady, selected, showGrid, value }: Props) => JSX.Element;
+export default _default;

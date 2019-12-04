@@ -48,7 +48,7 @@ export default {
         }),
 
         visualizer({
-            filename: './statistics.html',
+            filename: './docs/statistics.html',
             title: 'react-echarts-draw-mark Bundle',
         }),
     ],

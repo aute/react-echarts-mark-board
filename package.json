@@ -8,7 +8,7 @@
     "clean": "rimraf ./lib",
     "build": "rollup -c config/rollup.config.js",
     "start": "node --max_old_space_size=4096 node_modules/rollup/dist/bin/rollup -w -c config/rollup.config.dev.js",
-    "test": "jest --coverage"
+    "test": "jest  --coverage"
   },
   "repository": {
     "type": "git",
