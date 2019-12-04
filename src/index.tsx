@@ -12,8 +12,7 @@ const SYMBOL_SIZE = 14
 export default ({ onChange, onReady, selected, showGrid = false, value }: Props) => {
 
   useEffect(() => {
-    R.equals(data.shapeList, value) ||
-      dispatch({ type: 'LOAD', newShapeList: value })
+    R.equals(data.shapeList, value) || dispatch({ type: 'LOAD', newShapeList: value })
   }, [value])
 
   useEffect(() => {
@@ -27,48 +26,56 @@ export default ({ onChange, onReady, selected, showGrid = false, value }: Props)
   useEffect(() => {
     if (myChart) {
       const winRatio = myChart._dom.clientWidth / myChart._dom.clientHeight
+      const { shapeList, selected } = data
+      const selectedShape = shapeList[selected]
       myChart.setOption({
         ...chartInitData,
-        series: data.shapeList.map((item: Shape, index: number) => {
-          return {
-            type: 'line',
-            symbolSize: index === data.selected ? SYMBOL_SIZE : 0,
-            data: item.anchors.map(i => {
-              return [i[0], 100 - i[1]]
-            }),
-            lineStyle: {
-              color: item.color,
-            },
-            itemStyle: {
-              color: item.color,
-            },
-            markLine: item.type === 'sides' && {
-              symbol: ['circle', 'triangle'],
-              data: item.anchors[0] && [
-                [{
-                  coord: getSides(item.anchors as [Anchor, Anchor],winRatio)[0]
-                },
-                {
-                  coord: getSides(item.anchors as [Anchor, Anchor],winRatio)[1]
-                }]
-              ]
+        series: shapeList.map(
+          (item: Shape, index: number) => {
+            return {
+              type: 'line',
+              symbolSize: index === selected ? SYMBOL_SIZE : 0,
+              data: item.anchors.map(i => {
+                return [i[0], i[1]]
+              }),
+              lineStyle: {
+                color: item.color,
+              },
+              itemStyle: {
+                color: item.color,
+              },
+              markLine: item.type === 'sides' && {
+                symbol: ['circle', 'triangle'],
+                data: item.anchors[0] && [
+                  [{
+                    coord: getSides(item.anchors as [Anchor, Anchor], winRatio)[0]
+                  },
+                  {
+                    coord: getSides(item.anchors as [Anchor, Anchor], winRatio)[1]
+                  }]
+                ]
+              }
             }
-          }
-        }),
-        graphic: data.shapeList[data.selected] ? echarts['util'].map(data.shapeList[data.selected].anchors, (item: Anchor, dataIndex: number) => {
-          return {
-            type: 'circle',
-            position: myChart.convertToPixel('grid', [item[0], 100 - item[1]]),
-            shape: { cx: 0, cy: 0, r: SYMBOL_SIZE },
-            invisible: true,
-            draggable: true,
-            ondrag: echarts['util'].curry(function (this: any, dataIndex: number) {
-              const location = myChart.convertFromPixel('grid', this.position);
-              dispatch({ type: 'MOVE_ANCHOR', location: [location[0], 100 - location[1]], anchorOrdinal: dataIndex })
-            }, dataIndex),
-            z: 100
-          }
-        }) : null
+          }),
+        graphic: selectedShape ? selectedShape.anchors.map(
+          (item: Anchor, dataIndex: number) => {
+            return {
+              type: 'circle',
+              position: myChart.convertToPixel('grid', [item[0], item[1]]),
+              shape: { cx: 0, cy: 0, r: SYMBOL_SIZE },
+              invisible: true,
+              draggable: true,
+              ondrag: echarts['util'].curry(function (this: any, dataIndex: number) {
+                const location = myChart.convertFromPixel('grid', this.position);
+                dispatch({
+                  type: 'MOVE_ANCHOR',
+                  location: [location[0], location[1]],
+                  anchorOrdinal: dataIndex
+                })
+              }, dataIndex),
+              z: 100
+            }
+          }) : null
       }, true);
     }
     onChange(data)
@@ -78,10 +85,7 @@ export default ({ onChange, onReady, selected, showGrid = false, value }: Props)
   useEffect(() => {
     if (myChart) {
       dispatch({ type: 'LOAD', newShapeList: value, shapeOrdinal: selected })
-      onReady && onReady({
-        createShape,
-        deleteShape
-      })
+      onReady && onReady({ createShape, deleteShape })
     }
   }, [myChart])
 

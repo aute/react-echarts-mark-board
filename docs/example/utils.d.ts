@@ -24,6 +24,7 @@ export declare const chartInitData: {
     yAxis: {
         min: number;
         max: number;
+        inverse: boolean;
         type: string;
         splitLine: {
             show: boolean;

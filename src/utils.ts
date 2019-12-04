@@ -22,6 +22,7 @@ export const chartInitData = {
   yAxis: {
     min: 0,
     max: 100,
+    inverse:true,
     type: 'value',
     splitLine: {
       show: false
@@ -82,11 +83,11 @@ export const getSides = (line:[Anchor, Anchor], viewRatio:number): [Anchor, Anch
   return [
     [
       (startX + endX) / 2 - (startY - endY) / 4 / viewRatio,
-      100 - ((startY + endY) / 2 + (startX - endX) / 4 * viewRatio)
+      (startY + endY) / 2 + (startX - endX) / 4 * viewRatio
     ],
     [
       (startX + endX) / 2 + (startY - endY) / 4 / viewRatio,
-      100 - ((startY + endY) / 2 - (startX - endX) / 4 * viewRatio)
+      (startY + endY) / 2 - (startX - endX) / 4 * viewRatio
     ]
   ]
 };
