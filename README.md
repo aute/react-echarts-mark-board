@@ -4,7 +4,7 @@ English | [简体中文](./README.zh-CN.md)
 
 The library
 
-## DEMO
+## 🎁 DEMO
 #### 👉 [DEMO](https://aute.github.io/react-echarts-mark-board)
 ![demo](./demo.gif)
 
