@@ -1,4 +1,4 @@
-# [react-echarts-mark-board](https://github.com/aute/react-echarts-mark-board)
+# [react-echarts-mark-board](https://github.com/aute/react-echarts-mark-board) &middot; [![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/aute/react-echarts-mark-board/blob/master/LICENSE) [![npm version](https://img.shields.io/npm/v/react-echarts-mark-board)](https://www.npmjs.com/package/react-echarts-mark-board)  [![coverage](https://aute.github.io/react-echarts-mark-board/coverage/badges/badge-statements.svg)](https://aute.github.io/react-echarts-mark-board/coverage/lcov-report/) 
 [English](./README.md) | 简体中文
 
 react-echarts-mark-board 是基于 React 标注绘制工具，支持绘制线段、方向及封闭图形

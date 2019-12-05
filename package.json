@@ -8,7 +8,7 @@
     "clean": "rimraf ./lib",
     "build": "rollup -c config/rollup.config.js",
     "start": "node --max_old_space_size=4096 node_modules/rollup/dist/bin/rollup -w -c config/rollup.config.dev.js",
-    "test": "jest  --coverage"
+    "test": "jest --coverage && jest-coverage-badges input ./docs/coverage/coverage-summary.json output ./docs/coverage/badges"
   },
   "repository": {
     "type": "git",
@@ -30,6 +30,7 @@
     "babel-loader": "^8.0.6",
     "jest": "^24.9.0",
     "jest-canvas-mock": "^2.2.0",
+    "jest-coverage-badges": "^1.1.2",
     "node-sass": "^4.13.0",
     "ramda": "^0.26.1",
     "react": "^16.9.0",
