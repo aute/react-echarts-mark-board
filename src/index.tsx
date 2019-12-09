@@ -5,29 +5,29 @@ import echarts from 'echarts';
 
 import { Anchor, Props, Shape, ShapeType } from './types';
 import { chartInitData, getPoint, getSides, } from './utils'
-import { reducer } from './ common';
+import { reducer } from './common';
 
-const SYMBOL_SIZE = 14
+const SYMBOL_SIZE = 14;
 
 export default ({ onChange, onReady, selected, showGrid = false, value, lineWidth = 2 }: Props) => {
 
   useEffect(() => {
-    R.equals(data.shapeList, value) || dispatch({ type: 'LOAD', newShapeList: value })
-  }, [value])
+    R.equals(data.shapeList, value) || dispatch({ type: 'LOAD', newShapeList: value });
+  }, [value]);
 
   useEffect(() => {
     dispatch({ type: 'CHANGE_SELECTED', shapeOrdinal: selected })
-  }, [selected])
+  }, [selected]);
 
-  chartInitData.xAxis.splitLine.show = showGrid
-  chartInitData.yAxis.splitLine.show = showGrid
+  chartInitData.xAxis.splitLine.show = showGrid;
+  chartInitData.yAxis.splitLine.show = showGrid;
 
-  const [data, dispatch] = useReducer(reducer, { selected: 0, shapeList: value })
+  const [data, dispatch] = useReducer(reducer, { selected: 0, shapeList: value });
   useEffect(() => {
     if (myChart) {
-      const winRatio = myChart._dom.clientWidth / myChart._dom.clientHeight
-      const { shapeList, selected } = data
-      const selectedShape = shapeList[selected]
+      const winRatio = myChart._dom.clientWidth / myChart._dom.clientHeight;
+      const { shapeList, selected } = data;
+      const selectedShape = shapeList[selected];
       myChart.setOption({
         ...chartInitData,
         series: shapeList.map(
@@ -88,27 +88,27 @@ export default ({ onChange, onReady, selected, showGrid = false, value, lineWidt
       }, true);
       onChange(data)
     }
-  }, [data])
+  }, [data]);
 
-  const [myChart, setMayChart] = useState<any | null>(null)
+  const [myChart, setMayChart] = useState<any | null>(null);
   useEffect(() => {
     if (myChart) {
-      dispatch({ type: 'LOAD', newShapeList: value, shapeOrdinal: selected })
-      onReady && onReady({ createShape, deleteShape })
+      dispatch({ type: 'LOAD', newShapeList: value, shapeOrdinal: selected });
+      onReady && onReady({ createShape, deleteShape });
     }
-  }, [myChart])
+  }, [myChart]);
 
   const editAnchor = R.curry((mode: string, location: Anchor) => {
     dispatch({ type: mode, location })
-  })
+  });
 
   const createShape = (opt: { shapeType: ShapeType, color?: string, data?: any }) => {
     dispatch({ type: 'CREATE_SHAPE', shapeType: opt.shapeType, color: opt.color, data: opt.data })
-  }
+  };
 
   const deleteShape = (shapeOrdinal: number) => {
     dispatch({ type: 'DELETE_SHAPE', shapeOrdinal })
-  }
+  };
 
   return <div style={{ height: '100%', width: '100%' }}
     onClick={R.compose(editAnchor('PUSH_ANCHOR'), getPoint)}

@@ -44,4 +44,4 @@ export const shapeListInitData = [
         },
         "over": true,
         "type": "sides"
-    }]
+    }];
