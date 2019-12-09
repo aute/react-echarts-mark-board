@@ -2,7 +2,7 @@
 <coverage generated="1575514079290" clover="3.2.0">
   <project timestamp="1575514079291" name="All files">
     <metrics statements="128" coveredstatements="110" conditionals="102" coveredconditionals="74" methods="20" coveredmethods="19" elements="250" coveredelements="203" complexity="0" loc="128" ncloc="128" packages="1" files="3" classes="3"/>
-    <file name=" common.ts" path="/Users/aote/Desktop/react-echarts-draw-mark/src/ common.ts">
+    <file name="common.ts" path="/Users/aote/Desktop/react-echarts-draw-mark/src/common.ts">
       <metrics statements="61" coveredstatements="46" conditionals="68" coveredconditionals="44" methods="1" coveredmethods="1"/>
       <line num="2" count="1" type="stmt"/>
       <line num="3" count="1" type="stmt"/>

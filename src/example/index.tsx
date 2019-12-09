@@ -1,17 +1,17 @@
 import React from 'react'
 import ReactDOM from 'react-dom';
-import { ChangeHistory, ShowChart, CallMade, Clear, GitHub } from '@material-ui/icons';
+import {ChangeHistory, ShowChart, CallMade, Clear, GitHub} from '@material-ui/icons';
 import MarkBoard from '../index'
-import { useState, useEffect, useRef } from "react";
-import { shapeListInitData } from "./data";
+import {useState, useEffect, useRef} from "react";
+import {shapeListInitData} from "./data";
 import './App.scss';
 
 const App = () => {
-  const markTool = useRef(null)
-  const [shapeList, setShapeList] = useState(shapeListInitData)
-  const [selected, setSelected] = useState(1)
+  const markTool = useRef(null);
+  const [shapeList, setShapeList] = useState(shapeListInitData);
+  const [selected, setSelected] = useState(1);
 
-  const [activeButton, setActiveButton] = useState('')
+  const [activeButton, setActiveButton] = useState('');
 
   useEffect(() => {
     shapeList[selected] ?
@@ -21,18 +21,18 @@ const App = () => {
           setActiveButton(null)
       ) :
       setActiveButton(null)
-  }, [shapeList, selected])
+  }, [shapeList, selected]);
 
 
   const onReady = (tool) => {
-    markTool.current = tool
-  }
+    markTool.current = tool;
+  };
   const createShape = (p, color?: string) => {
-    markTool.current.createShape(p, color)
-  }
+    markTool.current.createShape(p, color);
+  };
   const deleteShape = (n: number) => {
-    markTool.current.deleteShape(n)
-  }
+    markTool.current.deleteShape(n);
+  };
   return (
     <div className='App'>
       <div className='App-content'>
@@ -46,38 +46,41 @@ const App = () => {
         <div className='App-tools'>
           <Buttons
             activeButton={activeButton}
-            createShape={createShape} />
+            createShape={createShape}/>
           <ShapeList
             shapeList={shapeList}
             selected={selected}
             setSelected={setSelected}
-            deleteShape={deleteShape} />
+            deleteShape={deleteShape}/>
         </div>
-        <h1>React<br />echarts<br />mark<br />board</h1>
+        <h1>React<br/>echarts<br/>mark<br/>board</h1>
       </div>
       <a className='GitHub-icon' href="https://github.com/aute/react-echarts-mark-board">
-        <GitHub /><span>GitHub</span>
+        <GitHub/><span>GitHub</span>
       </a>
       <footer>
         Aute
       </footer>
     </div>
   )
-}
+};
 
 const Buttons = (props) => {
   return <div className='buttons'>
-    <button onClick={() => props.createShape({ shapeType: 'polygon', color: '#14FF8E' })} className={props.activeButton === 'polygon' ? 'active' : ''}>
-      <ChangeHistory style={{ transform: 'translateY(-0.03125rem)' }} />
+    <button onClick={() => props.createShape({shapeType: 'polygon', color: '#14FF8E'})}
+            className={props.activeButton === 'polygon' ? 'active' : ''}>
+      <ChangeHistory style={{transform: 'translateY(-0.03125rem)'}}/>
     </button>
-    <button onClick={() => props.createShape({ shapeType: 'line', color: '#F276A3' })} className={props.activeButton === 'line' ? 'active' : ''}>
-      <ShowChart />
+    <button onClick={() => props.createShape({shapeType: 'line', color: '#F276A3'})}
+            className={props.activeButton === 'line' ? 'active' : ''}>
+      <ShowChart/>
     </button>
-    <button onClick={() => props.createShape({ shapeType: 'sides', color: '#fff000' })} className={props.activeButton === 'sides' ? 'active' : ''}>
-      <CallMade />
+    <button onClick={() => props.createShape({shapeType: 'sides', color: '#fff000'})}
+            className={props.activeButton === 'sides' ? 'active' : ''}>
+      <CallMade/>
     </button>
   </div>
-}
+};
 
 const ShapeList = (props) => {
   return <ul>
@@ -89,15 +92,15 @@ const ShapeList = (props) => {
           }}>
             <p>{i.data ? i.data.lable : i.type}</p>
             <Clear className='clear' onClick={(e) => {
-              e.stopPropagation()
+              e.stopPropagation();
               props.deleteShape(index)
-            }} />
+            }}/>
           </li>
         )
       }).reverse()
     }
   </ul>
-}
+};
 
 const Sketchpad = (props) => {
   return <div className='App-Sketchpad-Wrap'>
@@ -106,13 +109,13 @@ const Sketchpad = (props) => {
         lineWidth={6}
         onReady={props.onReady}
         onChange={e => {
-          props.setShapeList([...e.shapeList])
+          props.setShapeList([...e.shapeList]);
           props.setSelected(e.selected)
         }}
         selected={props.selected}
-        value={props.shapeList} />
+        value={props.shapeList}/>
     </div>
   </div>
-}
+};
 
-ReactDOM.render(<App />, document.getElementById('root'));
+ReactDOM.render(<App/>, document.getElementById('root'));

@@ -17,9 +17,9 @@ export function reducer(
       color?: string,
       data?: any
     }) {
-    const { type, location, newShapeList, shapeOrdinal, shapeType, anchorOrdinal, color, data } = action
-    let { shapeList, selected } = payload
-    let selectedItem = shapeList[selected]
+    const { type, location, newShapeList, shapeOrdinal, shapeType, anchorOrdinal, color, data } = action;
+    let { shapeList, selected } = payload;
+    let selectedItem = shapeList[selected];
     switch (type) {
       case 'CREATE_SHAPE':
         payload = {
@@ -29,17 +29,17 @@ export function reducer(
             data
           })],
           selected: shapeList.length
-        }
-        break
+        };
+        break;
       case 'DELETE_SHAPE':
         if (typeof (shapeOrdinal) === "undefined") {
-          break
+          break;
         }
         payload = {
           shapeList: R.remove(shapeOrdinal, 1, shapeList),
           selected: 0
-        }
-        break
+        };
+        break;
   
       case 'CHANGE_SELECTED':
         if (typeof (shapeOrdinal) === "undefined") {
@@ -48,75 +48,75 @@ export function reducer(
         payload = {
           ...payload,
           selected: shapeOrdinal
-        }
-        break
+        };
+        break;
       case 'PUSH_ANCHOR':
         if (!selectedItem || selectedItem.over || !location) {
-          break
+          break;
         }
         if (selectedItem.anchors.length < 1) {
-          selectedItem.anchors.push(location)
+          selectedItem.anchors.push(location);
         }
         if (selectedItem.type === 'polygon' && selectedItem.anchors.length > 3) {
-          selectedItem.anchors = setClose(selectedItem.anchors)
-          selectedItem.over = isClose(selectedItem.anchors)
+          selectedItem.anchors = setClose(selectedItem.anchors);
+          selectedItem.over = isClose(selectedItem.anchors);
           if (selectedItem.over) {
             payload = {
               ...payload
-            }
+            };
             break
           }
         }
         if (selectedItem.type === 'sides' && selectedItem.anchors.length > 1) {
-          selectedItem.over = true
-          payload = { ...payload }
+          selectedItem.over = true;
+          payload = { ...payload };
           break
         }
-        selectedItem.anchors.push(location)
-        payload = { ...payload }
-        break
+        selectedItem.anchors.push(location);
+        payload = { ...payload };
+        break;
   
       case 'MOVE_LAST_ANCHOR':
         if (selectedItem && !selectedItem.over && selectedItem.anchors.length > 0) {
           selectedItem.anchors = R.update(-1, location, selectedItem.anchors);
-          payload = { ...payload }
+          payload = { ...payload };
         }
-        break
+        break;
       case 'MOVE_ANCHOR':
         if (selectedItem && selectedItem.anchors.length > 0 && typeof anchorOrdinal === 'number') {
           selectedItem.anchors = R.update(anchorOrdinal, location, selectedItem.anchors);
           if (selectedItem.type === 'polygon' && selectedItem.over && action.anchorOrdinal === selectedItem.anchors.length - 1) {
             selectedItem.anchors = R.update(0, location, selectedItem.anchors);
           }
-          payload = { ...payload }
+          payload = { ...payload };
         }
-        break
+        break;
       case 'OVER':
         if (selectedItem && !selectedItem.over && selectedItem.anchors.length > 0) {
-          selectedItem.anchors = R.slice(0, -2, selectedItem.anchors)
+          selectedItem.anchors = R.slice(0, -2, selectedItem.anchors);
           if (selectedItem.type === 'polygon' && selectedItem.anchors.length > 3) {
             selectedItem.anchors = R.update(-1, R.head(selectedItem.anchors), selectedItem.anchors);
           }
           if (selectedItem.type === 'polygon' && selectedItem.anchors.length <= 3) {
-            break
+            break;
           }
           if (selectedItem.type === 'line' && selectedItem.anchors.length < 2) {
-            break
+            break;
           }
-          selectedItem.over = true
-          payload = { ...payload }
+          selectedItem.over = true;
+          payload = { ...payload };
         }
-        break
+        break;
       case 'LOAD':
-        selected = shapeOrdinal
+        selected = shapeOrdinal;
         if (!shapeOrdinal || shapeOrdinal < 0 || shapeOrdinal >= newShapeList.length) {
-          selected = 0
+          selected = 0;
         }
         payload = {
           selected: selected,
           shapeList: newShapeList
-        }
-        break
+        };
+        break;
     }
-    return payload
+    return payload;
   }
