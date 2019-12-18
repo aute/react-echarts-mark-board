@@ -1,8 +1,8 @@
-import React from 'react'
-import { render, unmountComponentAtNode } from "react-dom"
-import { act } from "react-dom/test-utils"
+import React from "react";
+import { render, unmountComponentAtNode } from "react-dom";
+import { act } from "react-dom/test-utils";
 
-import MarkBoard from '../index'
+import MarkBoard from "../index";
 import { Shape } from "../types";
 
 let container = null;
@@ -22,9 +22,8 @@ test("onReady call", () => {
     act(() => {
         render(<MarkBoard
             onReady={onReady}
-            onChange={onChange => { }}
             value={[]}
-            selected={0} />, container)
+            selected={0} />, container);
     });
     expect(onReady).toHaveBeenCalledTimes(1);
 });
@@ -36,16 +35,16 @@ test("data init", () => {
         shapeList: [{
             anchors: [[0, 0]],
             over: false,
-            type: 'line',
+            type: "line",
         }, {
             anchors: [[0, 0]],
             over: false,
-            type: 'line',
+            type: "line",
         }]
     };
     act(() => {
         render(<MarkBoard
-            onChange={e => { changeData = e }}
+            onChange={e => { changeData = e; }}
             value={initData.shapeList as Shape[]}
             selected={initData.selected} />, container);
     });
@@ -59,14 +58,14 @@ test("data init. selected > shapeList.length", () => {
         shapeList: [{
             anchors: [[0, 0]],
             over: false,
-            type: 'line',
+            type: "line",
         }]
     };
     act(() => {
         render(<MarkBoard
-            onChange={e => { changeData = e }}
+            onChange={e => { changeData = e; }}
             value={initData.shapeList as Shape[]}
-            selected={initData.selected} />, container)
+            selected={initData.selected} />, container);
     });
     initData.selected = 0;
     expect(changeData).toStrictEqual(initData);
@@ -77,19 +76,19 @@ test("createShape", () => {
     act(() => {
         render(<MarkBoard
             onReady={({ createShape }) => {
-                createShape({ shapeType: 'line', color: '#fff000' })
+                createShape({ shapeType: "line", color: "#fff000" });
             }}
-            onChange={e => { changeData = e }}
+            onChange={e => { changeData = e; }}
             value={[]}
-            selected={0} />, container)
+            selected={0} />, container);
     });
     expect(changeData).toStrictEqual({
         shapeList:
             [{
                 anchors: [],
-                color: '#fff000',
+                color: "#fff000",
                 over: false,
-                type: 'line',
+                type: "line",
                 data: undefined
             }],
         selected: 0
@@ -101,19 +100,19 @@ test("deleteShape", () => {
     act(() => {
         render(<MarkBoard
             onReady={({ deleteShape }) => {
-                deleteShape(0)
+                deleteShape(0);
             }}
-            onChange={e => { changeData = e }}
+            onChange={e => { changeData = e; }}
             value={[{ "anchors": [[0, 0], [0, 0]], "color": "#fff000", "over": false, "type": "polygon" }, { "anchors": [[0, 0], [0, 0]], "color": "#fff000", "over": false, "type": "polygon" }]}
-            selected={0} />, container)
+            selected={0} />, container);
     });
     expect(changeData).toStrictEqual({
         shapeList:
             [{
                 anchors: [[0, 0], [0, 0]],
-                color: '#fff000',
+                color: "#fff000",
                 over: false,
-                type: 'polygon',
+                type: "polygon",
             }],
         selected: 0
     });
@@ -124,11 +123,11 @@ test("line", () => {
     act(() => {
         render(<MarkBoard
             onReady={({ createShape }) => {
-                createShape({ shapeType: 'line', color: '#fff000' })
+                createShape({ shapeType: "line", color: "#fff000" });
             }}
-            onChange={e => { changeData = e }}
+            onChange={e => { changeData = e; }}
             value={[]}
-            selected={0} />, container)
+            selected={0} />, container);
     });
     const markBoard = document.querySelector("[data-testid=MarkBoard]");
     act(() => {
@@ -136,7 +135,7 @@ test("line", () => {
             bubbles: true,
         }));
     });
-    expect(JSON.stringify(changeData)).toStrictEqual('{"shapeList":[{"anchors":[[0,0],[0,0]],"color":"#fff000","over":false,"type":"line"}],"selected":0}');
+    expect(JSON.stringify(changeData)).toStrictEqual("{\"shapeList\":[{\"anchors\":[[0,0],[0,0]],\"color\":\"#fff000\",\"over\":false,\"type\":\"line\"}],\"selected\":0}");
 
     act(() => {
         markBoard.dispatchEvent(new MouseEvent("click", {
@@ -149,7 +148,7 @@ test("line", () => {
             bubbles: true,
         }));
     });
-    expect(JSON.stringify(changeData)).toStrictEqual('{"shapeList":[{"anchors":[[0,0],[0,0]],"color":"#fff000","over":true,"type":"line"}],"selected":0}');
+    expect(JSON.stringify(changeData)).toStrictEqual("{\"shapeList\":[{\"anchors\":[[0,0],[0,0]],\"color\":\"#fff000\",\"over\":true,\"type\":\"line\"}],\"selected\":0}");
 });
 
 test("polygon", () => {
@@ -157,11 +156,11 @@ test("polygon", () => {
     act(() => {
         render(<MarkBoard
             onReady={({ createShape }) => {
-                createShape({ shapeType: 'polygon', color: '#fff000' })
+                createShape({ shapeType: "polygon", color: "#fff000" });
             }}
-            onChange={e => { changeData = e }}
+            onChange={e => { changeData = e; }}
             value={[]}
-            selected={0} />, container)
+            selected={0} />, container);
     });
     const markBoard = document.querySelector("[data-testid=MarkBoard]");
     act(() => {
@@ -169,7 +168,7 @@ test("polygon", () => {
             bubbles: true,
         }));
     });
-    expect(JSON.stringify(changeData)).toStrictEqual('{"shapeList":[{"anchors":[[0,0],[0,0]],"color":"#fff000","over":false,"type":"polygon"}],"selected":0}');
+    expect(JSON.stringify(changeData)).toStrictEqual("{\"shapeList\":[{\"anchors\":[[0,0],[0,0]],\"color\":\"#fff000\",\"over\":false,\"type\":\"polygon\"}],\"selected\":0}");
 
     act(() => {
         markBoard.dispatchEvent(new MouseEvent("click", {
@@ -182,7 +181,7 @@ test("polygon", () => {
             bubbles: true,
         }));
     });
-    expect(JSON.stringify(changeData)).toStrictEqual('{"shapeList":[{"anchors":[[0,0],[0,0]],"color":"#fff000","over":false,"type":"polygon"}],"selected":0}');
+    expect(JSON.stringify(changeData)).toStrictEqual("{\"shapeList\":[{\"anchors\":[[0,0],[0,0]],\"color\":\"#fff000\",\"over\":false,\"type\":\"polygon\"}],\"selected\":0}");
 
     act(() => {
         markBoard.dispatchEvent(new MouseEvent("click", {
@@ -198,7 +197,7 @@ test("polygon", () => {
             bubbles: true,
         }));
     });
-    expect(JSON.stringify(changeData)).toStrictEqual('{"shapeList":[{"anchors":[[0,0],[0,0],[0,0],[0,0]],"color":"#fff000","over":true,"type":"polygon"}],"selected":0}')
+    expect(JSON.stringify(changeData)).toStrictEqual("{\"shapeList\":[{\"anchors\":[[0,0],[0,0],[0,0],[0,0]],\"color\":\"#fff000\",\"over\":true,\"type\":\"polygon\"}],\"selected\":0}");
 });
 
 test("sides", () => {
@@ -206,11 +205,11 @@ test("sides", () => {
     act(() => {
         render(<MarkBoard
             onReady={({ createShape }) => {
-                createShape({ shapeType: 'sides', color: '#fff000' })
+                createShape({ shapeType: "sides", color: "#fff000" });
             }}
-            onChange={e => { changeData = e }}
+            onChange={e => { changeData = e; }}
             value={[]}
-            selected={0} />, container)
+            selected={0} />, container);
     });
     const markBoard = document.querySelector("[data-testid=MarkBoard]");
     act(() => {
@@ -218,12 +217,12 @@ test("sides", () => {
             bubbles: true,
         }));
     });
-    expect(JSON.stringify(changeData)).toStrictEqual('{"shapeList":[{"anchors":[[0,0],[0,0]],"color":"#fff000","over":false,"type":"sides"}],"selected":0}');
+    expect(JSON.stringify(changeData)).toStrictEqual("{\"shapeList\":[{\"anchors\":[[0,0],[0,0]],\"color\":\"#fff000\",\"over\":false,\"type\":\"sides\"}],\"selected\":0}");
 
     act(() => {
         markBoard.dispatchEvent(new MouseEvent("click", {
             bubbles: true,
         }));
     });
-    expect(JSON.stringify(changeData)).toStrictEqual('{"shapeList":[{"anchors":[[0,0],[0,0]],"color":"#fff000","over":true,"type":"sides"}],"selected":0}');
+    expect(JSON.stringify(changeData)).toStrictEqual("{\"shapeList\":[{\"anchors\":[[0,0],[0,0]],\"color\":\"#fff000\",\"over\":true,\"type\":\"sides\"}],\"selected\":0}");
 });

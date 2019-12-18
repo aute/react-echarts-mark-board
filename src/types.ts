@@ -1,6 +1,6 @@
 export type Anchor = [number, number];
 export type Anchors = Anchor[];
-export type ShapeType = 'line' | 'polygon' | 'sides';
+export type ShapeType = "line" | "polygon" | "sides";
 export type Shape = {
     anchors: Anchors;
     color?: string;
@@ -13,7 +13,7 @@ export interface Props {
     value: Shape[];
     showGrid?: boolean;
     lineWidth?: number;
-    onChange: (data: {
+    onChange?: (data: {
         selected: number;
         shapeList: Shape[];
     }) => void;
