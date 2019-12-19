@@ -88,7 +88,7 @@ const markBoard: React.FC<Props> = ({ onChange, onReady, selected, showGrid = fa
                         };
                     }) : null
             }, true);
-            onChange(data);
+            onChange && onChange(data);
         }
     }, [data]);
 

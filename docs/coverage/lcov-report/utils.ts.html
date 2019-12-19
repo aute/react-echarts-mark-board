@@ -137,7 +137,10 @@
 <a name='L89'></a><a href='#L89'>89</a>
 <a name='L90'></a><a href='#L90'>90</a>
 <a name='L91'></a><a href='#L91'>91</a>
-<a name='L92'></a><a href='#L92'>92</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
+<a name='L92'></a><a href='#L92'>92</a>
+<a name='L93'></a><a href='#L93'>93</a>
+<a name='L94'></a><a href='#L94'>94</a>
+<a name='L95'></a><a href='#L95'>95</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
@@ -206,6 +209,9 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">4x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -216,9 +222,9 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -232,100 +238,103 @@
 import { Anchor, Anchors, Shape, ShapeType } from "./types";
 &nbsp;
 export const chartInitData = {
-  grid: {
-    top: 0,
-    right: 1,
-    bottom: 1,
-    left: 0
-  },
-  xAxis: {
-    min: 0,
-    max: 1,
-    type: 'value',
-    splitLine: {
-      show: false
+    grid: {
+        top: 0,
+        right: 1,
+        bottom: 1,
+        left: 0
     },
-    axisLine: {
-      lineStyle: { color: 'rgba(0,0,0,0)' }, onZero: false
-    }
-  },
-  yAxis: {
-    min: 0,
-    max: 1,
-    inverse:true,
-    type: 'value',
-    splitLine: {
-      show: false
+    xAxis: {
+        min: 0,
+        max: 1,
+        type: "value",
+        splitLine: {
+            show: false
+        },
+        axisLine: {
+            lineStyle: { color: "rgba(0,0,0,0)" }, onZero: false
+        }
     },
-    axisLine: {
-      lineStyle: { color: 'rgba(0,0,0,0)' }, onZero: false
-    }
-  },
-  series: []
-}
-&nbsp;
-export const getDistance = (anchor1: Anchor, anchor2: Anchor): number =&gt; {
-  const s = Math.sqrt(Math.pow(anchor1[0] - anchor2[0], 2) + Math.pow(anchor1[1] - anchor2[1], 2))
-  return s;
-}
-&nbsp;
-export const getPoint = (e: React.MouseEvent&lt;HTMLElement&gt;): Anchor =&gt; {
-  const offsetX = e.nativeEvent.offsetX || 0
-  const offsetY = e.nativeEvent.offsetY || 0
-  const clientWidth = e.currentTarget.clientWidth || 0
-  const clientHeight = e.currentTarget.clientHeight || 0
-  const x = offsetX / clientWidth || 0;
-  const y = offsetY / clientHeight || 0;
-  return [x, y];
-}
-&nbsp;
-export const magnetic = (staticPoint: Anchor, attractionPoint: Anchor): Anchor =&gt; {
-  const gravitation = 0.05
-  const distance = getDistance(staticPoint, attractionPoint)
-  <span class="missing-if-branch" title="if path not taken" >I</span>if (gravitation - distance &lt; 0) {
-<span class="cstat-no" title="statement not covered" >    return attractionPoint</span>
-  }
-  return staticPoint
-}
-&nbsp;
-export const isClose = (polygon: Anchors): boolean =&gt; {
-  return R.equals(R.head(polygon), R.last(polygon))
-}
-&nbsp;
-export const setClose = (polygon: Anchors): Anchors =&gt; {
-  return R.update(-1, magnetic(R.head(polygon), R.last(polygon)), polygon)
-}
-&nbsp;
-export const createShape = (option: { shapeType: ShapeType; color?: string; data?: any }): Shape =&gt; {
-  return {
-    anchors: [],
-    color: option.color,
-    over: false,
-    type: option.shapeType,
-    data: option.data
-  }
+    yAxis: {
+        min: 0,
+        max: 1,
+        inverse: true,
+        type: "value",
+        splitLine: {
+            show: false
+        },
+        axisLine: {
+            lineStyle: { color: "rgba(0,0,0,0)" }, onZero: false
+        }
+    },
+    series: []
 };
 &nbsp;
-export const getSides = (line:[Anchor, Anchor], viewRatio:number): [Anchor, Anchor] =&gt; {
-  const [[startX, startY], [endX, endY]] = line
+export const getDistance = (anchor1: Anchor, anchor2: Anchor): number =&gt; {
+    const s = Math.sqrt(Math.pow(anchor1[0] - anchor2[0], 2) + Math.pow(anchor1[1] - anchor2[1], 2));
+    return s;
+};
 &nbsp;
-  return [
-    [
-      (startX + endX) / 2 - (startY - endY) / 4 / viewRatio,
-      (startY + endY) / 2 + (startX - endX) / 4 * viewRatio
-    ],
-    [
-      (startX + endX) / 2 + (startY - endY) / 4 / viewRatio,
-      (startY + endY) / 2 - (startX - endX) / 4 * viewRatio
-    ]
-  ]
+export const getPoint = (e: React.MouseEvent&lt;HTMLElement&gt;): Anchor =&gt; {
+    const offsetX = e.nativeEvent.offsetX || 0;
+    const offsetY = e.nativeEvent.offsetY || 0;
+    const clientWidth = e.currentTarget.clientWidth || 0;
+    const clientHeight = e.currentTarget.clientHeight || 0;
+    const x = offsetX / clientWidth || 0;
+    const y = offsetY / clientHeight || 0;
+    return [x, y];
+};
+&nbsp;
+export const magnetic = (staticPoint: Anchor, attractionPoint: Anchor): Anchor =&gt; {
+    const gravitation = 0.05;
+    const distance = getDistance(staticPoint, attractionPoint);
+    <span class="missing-if-branch" title="if path not taken" >I</span>if (gravitation - distance &lt; 0) {
+<span class="cstat-no" title="statement not covered" >        return attractionPoint;</span>
+    }
+    return staticPoint;
+};
+&nbsp;
+export const isClose = (polygon: Anchors): boolean =&gt; {
+    return R.equals(R.head(polygon), R.last(polygon));
+};
+&nbsp;
+export const setClose = (polygon: Anchors): Anchors =&gt; {
+    return R.update(-1, magnetic(R.head(polygon), R.last(polygon)), polygon);
+};
+&nbsp;
+export const createShape = (option: { 
+    shapeType: ShapeType; 
+    color?: string; 
+    data?: any; }): Shape =&gt; {
+    return {
+        anchors: [],
+        color: option.color,
+        over: false,
+        type: option.shapeType,
+        data: option.data
+    };
+};
+&nbsp;
+export const getSides = (line: [Anchor, Anchor], viewRatio: number): [Anchor, Anchor] =&gt; {
+    const [[startX, startY], [endX, endY]] = line;
+&nbsp;
+    return [
+        [
+            (startX + endX) / 2 - (startY - endY) / 4 / viewRatio,
+            (startY + endY) / 2 + (startX - endX) / 4 * viewRatio
+        ],
+        [
+            (startX + endX) / 2 + (startY - endY) / 4 / viewRatio,
+            (startY + endY) / 2 - (startX - endX) / 4 * viewRatio
+        ]
+    ];
 };</pre></td></tr>
 </table></pre>
 <div class='push'></div><!-- for sticky footer -->
 </div><!-- /wrapper -->
 <div class='footer quiet pad2 space-top1 center small'>
   Code coverage
-  generated by <a href="https://istanbul.js.org/" target="_blank">istanbul</a> at Thu Dec 05 2019 10:47:59 GMT+0800 (GMT+08:00)
+  generated by <a href="https://istanbul.js.org/" target="_blank">istanbul</a> at Thu Dec 19 2019 09:17:54 GMT+0800 (GMT+08:00)
 </div>
 </div>
 <script src="prettify.js"></script>
