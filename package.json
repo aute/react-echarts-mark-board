@@ -1,6 +1,6 @@
 {
   "name": "react-echarts-mark-board",
-  "version": "0.0.1-beta.2",
+  "version": "0.0.1-beta.3",
   "description": "",
   "keywords": [
     "react",
@@ -15,6 +15,7 @@
   ],
   "main": "lib/index.js",
   "type": "lib/@index.d.ts",
+  "files": ["lib"],
   "scripts": {
     "clean": "rimraf ./lib",
     "build": "rollup -c config/rollup.config.js",
