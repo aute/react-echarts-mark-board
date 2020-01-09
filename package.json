@@ -1,6 +1,6 @@
 {
     "name": "react-echarts-mark-board",
-    "version": "0.0.1-beta.3",
+    "version": "0.0.1-beta.4",
     "description": "",
     "keywords": [
         "react",
@@ -37,6 +37,7 @@
         "@material-ui/icons": "^4.5.1",
         "@rollup/plugin-node-resolve": "^6.0.0",
         "@rollup/plugin-replace": "^2.2.1",
+        "@testing-library/react": "^9.4.0",
         "@types/echarts": "^4.4.1",
         "@types/jest": "^24.0.23",
         "@types/ramda": "^0.26.28",

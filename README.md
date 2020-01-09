@@ -4,8 +4,6 @@ Mark drawing tool, support for drawing lines , rays and other graphics.
 
 English | [简体中文](./README.zh-CN.md)
 
-The library
-
 ## 🎁 DEMO
 #### 👉 [DEMO](https://aute.github.io/react-echarts-mark-board)
 ![demo](./demo.gif)
@@ -58,18 +56,6 @@ To run unit tests:
 
 ```bash
 $ npm test
-```
-
-Modify the version number in package.json, modify the version number in README.md, modify the CHANGELOG.md, and then release the new version.
-
-```bash
-$ npm run release
-```
-
-Publish the new version to NPM.
-
-```bash
-$ npm publish
 ```
 
 

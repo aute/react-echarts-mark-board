@@ -1,30 +1,15 @@
 import React from "react";
-import { render, unmountComponentAtNode } from "react-dom";
-import { act } from "react-dom/test-utils";
+import { render, fireEvent } from "@testing-library/react";
 
 import MarkBoard from "../index";
 import { Shape } from "../types";
 
-let container = null;
-beforeEach(() => {
-    container = document.createElement("div");
-    document.body.appendChild(container);
-});
-
-afterEach(() => {
-    unmountComponentAtNode(container);
-    container.remove();
-    container = null;
-});
-
 test("onReady call", () => {
     const onReady = jest.fn();
-    act(() => {
-        render(<MarkBoard
-            onReady={onReady}
-            value={[]}
-            selected={0} />, container);
-    });
+    render(<MarkBoard
+        onReady={onReady}
+        value={[]}
+        selected={0} />);
     expect(onReady).toHaveBeenCalledTimes(1);
 });
 
@@ -42,12 +27,10 @@ test("data init", () => {
             type: "line",
         }]
     };
-    act(() => {
-        render(<MarkBoard
-            onChange={e => { changeData = e; }}
-            value={initData.shapeList as Shape[]}
-            selected={initData.selected} />, container);
-    });
+    render(<MarkBoard
+        onChange={(e): void => { changeData = e; }}
+        value={initData.shapeList as Shape[]}
+        selected={initData.selected} />);
     expect(changeData).toStrictEqual(initData);
 });
 
@@ -61,27 +44,23 @@ test("data init. selected > shapeList.length", () => {
             type: "line",
         }]
     };
-    act(() => {
-        render(<MarkBoard
-            onChange={e => { changeData = e; }}
-            value={initData.shapeList as Shape[]}
-            selected={initData.selected} />, container);
-    });
+    render(<MarkBoard
+        onChange={(e): void => { changeData = e; }}
+        value={initData.shapeList as Shape[]}
+        selected={initData.selected} />);
     initData.selected = 0;
     expect(changeData).toStrictEqual(initData);
 });
 
 test("createShape", () => {
     let changeData = null;
-    act(() => {
-        render(<MarkBoard
-            onReady={({ createShape }) => {
-                createShape({ shapeType: "line", color: "#fff000" });
-            }}
-            onChange={e => { changeData = e; }}
-            value={[]}
-            selected={0} />, container);
-    });
+    render(<MarkBoard
+        onReady={({ createShape }): void => {
+            createShape({ shapeType: "line", color: "#fff000" });
+        }}
+        onChange={(e): void => { changeData = e; }}
+        value={[]}
+        selected={0} />);
     expect(changeData).toStrictEqual({
         shapeList:
             [{
@@ -97,15 +76,13 @@ test("createShape", () => {
 
 test("deleteShape", () => {
     let changeData = null;
-    act(() => {
-        render(<MarkBoard
-            onReady={({ deleteShape }) => {
-                deleteShape(0);
-            }}
-            onChange={e => { changeData = e; }}
-            value={[{ "anchors": [[0, 0], [0, 0]], "color": "#fff000", "over": false, "type": "polygon" }, { "anchors": [[0, 0], [0, 0]], "color": "#fff000", "over": false, "type": "polygon" }]}
-            selected={0} />, container);
-    });
+    render(<MarkBoard
+        onReady={({ deleteShape }): void => {
+            deleteShape(0);
+        }}
+        onChange={(e): void => { changeData = e; }}
+        value={[{ "anchors": [[0, 0], [0, 0]], "color": "#fff000", "over": false, "type": "polygon" }, { "anchors": [[0, 0], [0, 0]], "color": "#fff000", "over": false, "type": "polygon" }]}
+        selected={0} />);
     expect(changeData).toStrictEqual({
         shapeList:
             [{
@@ -120,109 +97,57 @@ test("deleteShape", () => {
 
 test("line", () => {
     let changeData = null;
-    act(() => {
-        render(<MarkBoard
-            onReady={({ createShape }) => {
-                createShape({ shapeType: "line", color: "#fff000" });
-            }}
-            onChange={e => { changeData = e; }}
-            value={[]}
-            selected={0} />, container);
-    });
-    const markBoard = document.querySelector("[data-testid=MarkBoard]");
-    act(() => {
-        markBoard.dispatchEvent(new MouseEvent("click", {
-            bubbles: true,
-        }));
-    });
+    const { getByTestId, } = render(<MarkBoard
+        onReady={({ createShape }): void => {
+            createShape({ shapeType: "line", color: "#fff000" });
+        }}
+        onChange={(e): void => { changeData = e; }}
+        value={[]}
+        selected={0} />);
+    const markBoard = getByTestId("MarkBoard");
+    fireEvent.click(markBoard);
     expect(JSON.stringify(changeData)).toStrictEqual("{\"shapeList\":[{\"anchors\":[[0,0],[0,0]],\"color\":\"#fff000\",\"over\":false,\"type\":\"line\"}],\"selected\":0}");
-
-    act(() => {
-        markBoard.dispatchEvent(new MouseEvent("click", {
-            bubbles: true,
-        }));
-        markBoard.dispatchEvent(new MouseEvent("click", {
-            bubbles: true,
-        }));
-        markBoard.dispatchEvent(new MouseEvent("dblclick", {
-            bubbles: true,
-        }));
-    });
+    fireEvent.click(markBoard);
+    fireEvent.click(markBoard);
+    fireEvent.dblClick(markBoard);
     expect(JSON.stringify(changeData)).toStrictEqual("{\"shapeList\":[{\"anchors\":[[0,0],[0,0]],\"color\":\"#fff000\",\"over\":true,\"type\":\"line\"}],\"selected\":0}");
 });
 
 test("polygon", () => {
     let changeData = null;
-    act(() => {
-        render(<MarkBoard
-            onReady={({ createShape }) => {
-                createShape({ shapeType: "polygon", color: "#fff000" });
-            }}
-            onChange={e => { changeData = e; }}
-            value={[]}
-            selected={0} />, container);
-    });
-    const markBoard = document.querySelector("[data-testid=MarkBoard]");
-    act(() => {
-        markBoard.dispatchEvent(new MouseEvent("click", {
-            bubbles: true,
-        }));
-    });
+    const { getByTestId, } = render(<MarkBoard
+        onReady={({ createShape }): void => {
+            createShape({ shapeType: "polygon", color: "#fff000" });
+        }}
+        onChange={(e): void => { changeData = e; }}
+        value={[]}
+        selected={0} />);
+    const markBoard = getByTestId("MarkBoard");
+    fireEvent.click(markBoard);
     expect(JSON.stringify(changeData)).toStrictEqual("{\"shapeList\":[{\"anchors\":[[0,0],[0,0]],\"color\":\"#fff000\",\"over\":false,\"type\":\"polygon\"}],\"selected\":0}");
-
-    act(() => {
-        markBoard.dispatchEvent(new MouseEvent("click", {
-            bubbles: true,
-        }));
-        markBoard.dispatchEvent(new MouseEvent("click", {
-            bubbles: true,
-        }));
-        markBoard.dispatchEvent(new MouseEvent("dblclick", {
-            bubbles: true,
-        }));
-    });
+    fireEvent.click(markBoard);
+    fireEvent.click(markBoard);
+    fireEvent.dblClick(markBoard);
     expect(JSON.stringify(changeData)).toStrictEqual("{\"shapeList\":[{\"anchors\":[[0,0],[0,0]],\"color\":\"#fff000\",\"over\":false,\"type\":\"polygon\"}],\"selected\":0}");
-
-    act(() => {
-        markBoard.dispatchEvent(new MouseEvent("click", {
-            bubbles: true,
-        }));
-        markBoard.dispatchEvent(new MouseEvent("click", {
-            bubbles: true,
-        }));
-        markBoard.dispatchEvent(new MouseEvent("click", {
-            bubbles: true,
-        }));
-        markBoard.dispatchEvent(new MouseEvent("dblclick", {
-            bubbles: true,
-        }));
-    });
+    fireEvent.click(markBoard);
+    fireEvent.click(markBoard);
+    fireEvent.click(markBoard);
+    fireEvent.dblClick(markBoard);
     expect(JSON.stringify(changeData)).toStrictEqual("{\"shapeList\":[{\"anchors\":[[0,0],[0,0],[0,0],[0,0]],\"color\":\"#fff000\",\"over\":true,\"type\":\"polygon\"}],\"selected\":0}");
 });
 
 test("sides", () => {
     let changeData = null;
-    act(() => {
-        render(<MarkBoard
-            onReady={({ createShape }) => {
-                createShape({ shapeType: "sides", color: "#fff000" });
-            }}
-            onChange={e => { changeData = e; }}
-            value={[]}
-            selected={0} />, container);
-    });
-    const markBoard = document.querySelector("[data-testid=MarkBoard]");
-    act(() => {
-        markBoard.dispatchEvent(new MouseEvent("click", {
-            bubbles: true,
-        }));
-    });
+    const { getByTestId, } = render(<MarkBoard
+        onReady={({ createShape }): void => {
+            createShape({ shapeType: "sides", color: "#fff000" });
+        }}
+        onChange={(e): void => { changeData = e; }}
+        value={[]}
+        selected={0} />);
+    const markBoard = getByTestId("MarkBoard");
+    fireEvent.click(markBoard);
     expect(JSON.stringify(changeData)).toStrictEqual("{\"shapeList\":[{\"anchors\":[[0,0],[0,0]],\"color\":\"#fff000\",\"over\":false,\"type\":\"sides\"}],\"selected\":0}");
-
-    act(() => {
-        markBoard.dispatchEvent(new MouseEvent("click", {
-            bubbles: true,
-        }));
-    });
+    fireEvent.click(markBoard);
     expect(JSON.stringify(changeData)).toStrictEqual("{\"shapeList\":[{\"anchors\":[[0,0],[0,0]],\"color\":\"#fff000\",\"over\":true,\"type\":\"sides\"}],\"selected\":0}");
 });
