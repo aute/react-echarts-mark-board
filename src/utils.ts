@@ -93,3 +93,10 @@ export const getSides = (line: [Anchor, Anchor], viewRatio: number): [Anchor, An
         ]
     ];
 };
+
+export const getArrow = (line: [Anchor, Anchor]): Anchor => {
+    const [[startX, startY], [endX, endY]] = line;
+    return [(endX-startX)+startX, (endY-startY)+startY];
+};
+
+

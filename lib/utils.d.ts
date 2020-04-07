@@ -49,3 +49,4 @@ export declare const createShape: (option: {
     data?: any;
 }) => Shape;
 export declare const getSides: (line: [Anchor, Anchor], viewRatio: number) => [Anchor, Anchor];
+export declare const getArrow: (line: [Anchor, Anchor]) => Anchor;

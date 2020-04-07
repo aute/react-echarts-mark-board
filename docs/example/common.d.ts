@@ -1,8 +1,9 @@
 import { Shape, Anchor, ShapeType } from "./types";
-export declare function reducer(payload: {
+declare type Payload = {
     selected: number;
     shapeList: Shape[];
-}, action: {
+};
+declare type Action = {
     type: string;
     location?: Anchor;
     shapeType?: ShapeType;
@@ -11,7 +12,6 @@ export declare function reducer(payload: {
     newShapeList?: Shape[];
     color?: string;
     data?: any;
-}): {
-    selected: number;
-    shapeList: Shape[];
 };
+export declare function reducer(payload: Payload, action: Action): Payload;
+export {};

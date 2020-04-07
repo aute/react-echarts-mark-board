@@ -76,6 +76,11 @@ export function reducer(
             payload = { ...payload };
             break;
         }
+        if (selectedItem.type === "arrow" && selectedItem.anchors.length > 1) {
+            selectedItem.over = true;
+            payload = { ...payload };
+            break;
+        }
         selectedItem.anchors.push(location);
         payload = { ...payload };
         break;

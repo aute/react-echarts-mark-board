@@ -4,10 +4,10 @@ import * as R from "ramda";
 import echarts from "echarts";
 
 import { Anchor, Props, Shape, ShapeType } from "./types";
-import { chartInitData, getPoint, getSides, } from "./utils";
+import { chartInitData, getPoint, getSides, getArrow } from "./utils";
 import { reducer } from "./common";
 
-const SYMBOL_SIZE = 14;
+const SYMBOL_SIZE = 12;
 
 const markBoard: React.FC<Props> = ({ onChange, onReady, selected, showGrid = false, value, lineWidth = 2 }: Props) => {
     const [data, dispatch] = useReducer(reducer, { selected: 0, shapeList: value });
@@ -44,6 +44,11 @@ const markBoard: React.FC<Props> = ({ onChange, onReady, selected, showGrid = fa
                                 }]
                             ] : null;
                         };
+                        const [[startX, startY], [endX, endY]] = item.anchors[0] && item.anchors[1]? item.anchors : [[0,0],[0,0]];
+                        const getMarkPointData = (): object => {
+                            const coord = item.anchors[0] ? getArrow(item.anchors as [Anchor, Anchor]) : null;
+                            return coord ? [{coord}]: null;
+                        };
                         return {
                             type: "line",
                             symbolSize: index === selected ? SYMBOL_SIZE : 0,
@@ -55,6 +60,14 @@ const markBoard: React.FC<Props> = ({ onChange, onReady, selected, showGrid = fa
                             itemStyle: {
                                 color: item.color,
                             },
+                            markPoint: item.type === "arrow" && {
+                                silent: true,
+                                symbol: "triangle",
+                                symbolSize: R.max(12 * 2, lineWidth * 2.4 * 2),
+                                symbolRotate: (endX-startX) > 0 ? Math.atan((-endY+startY)/(endX-startX)/winRatio)*180/Math.PI-90 : Math.atan((endY-startY)/(-endX+startX)/winRatio)*180/Math.PI+90,
+                                data: getMarkPointData(),
+                                animation: false
+                            },
                             markLine: item.type === "sides" && {
                                 silent: true,
                                 symbol: ["circle", "triangle"],
@@ -63,7 +76,8 @@ const markBoard: React.FC<Props> = ({ onChange, onReady, selected, showGrid = fa
                                     type: "solid",
                                     width: lineWidth,
                                 },
-                                data: getMarkLineData()
+                                data: getMarkLineData(),
+                                animation: false
                             },
                             clip: false,
                         };
@@ -93,10 +107,10 @@ const markBoard: React.FC<Props> = ({ onChange, onReady, selected, showGrid = fa
     }, [data]);
 
     const createShape = (opt: {
-    shapeType: ShapeType;
-    color?: string;
-    data?: any;
-  }): void => {
+        shapeType: ShapeType;
+        color?: string;
+        data?: any;
+    }): void => {
         dispatch({ type: "CREATE_SHAPE", shapeType: opt.shapeType, color: opt.color, data: opt.data });
     };
 

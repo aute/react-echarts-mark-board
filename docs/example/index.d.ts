@@ -1,4 +1,4 @@
-/// <reference types="react" />
-import { Props } from './types';
-declare const _default: ({ onChange, onReady, selected, showGrid, value, lineWidth }: Props) => JSX.Element;
-export default _default;
+import React from "react";
+import { Props } from "./types";
+declare const markBoard: React.FC<Props>;
+export default markBoard;
