@@ -68,10 +68,10 @@ const markBoard: React.FC<Props> = ({ onChange, onReady, selected, showGrid = fa
                                 data: getMarkPointData(),
                                 animation: false
                             },
-                            markLine: item.type === "sides" && {
+                            markLine: (item.type === "sides" || item.type === "sides_polygon") && {
                                 silent: true,
                                 symbol: ["circle", "triangle"],
-                                symbolSize: R.max(12, lineWidth * 2.4),
+                                symbolSize: R.max(12 * 2, lineWidth * 2.4 * 2),
                                 lineStyle: {
                                     type: "solid",
                                     width: lineWidth,

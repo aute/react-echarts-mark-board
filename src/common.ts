@@ -61,7 +61,7 @@ export function reducer(
         if (selectedItem.anchors.length < 1) {
             selectedItem.anchors.push(location);
         }
-        if (selectedItem.type === "polygon" && selectedItem.anchors.length > 3) {
+        if ((selectedItem.type === "polygon" || selectedItem.type === "sides_polygon") && selectedItem.anchors.length > 3) {
             selectedItem.anchors = setClose(selectedItem.anchors);
             selectedItem.over = isClose(selectedItem.anchors);
             if (selectedItem.over) {
@@ -94,7 +94,7 @@ export function reducer(
     case "MOVE_ANCHOR":
         if (selectedItem && selectedItem.anchors.length > 0 && typeof anchorOrdinal === "number") {
             selectedItem.anchors = R.update(anchorOrdinal, location, selectedItem.anchors);
-            if (selectedItem.type === "polygon" && selectedItem.over && action.anchorOrdinal === selectedItem.anchors.length - 1) {
+            if ((selectedItem.type === "polygon" || selectedItem.type === "sides_polygon") && selectedItem.over && action.anchorOrdinal === selectedItem.anchors.length - 1) {
                 selectedItem.anchors = R.update(0, location, selectedItem.anchors);
             }
             payload = { ...payload };
@@ -103,10 +103,10 @@ export function reducer(
     case "OVER":
         if (selectedItem && !selectedItem.over && selectedItem.anchors.length > 0) {
             selectedItem.anchors = R.slice(0, -2, selectedItem.anchors);
-            if (selectedItem.type === "polygon" && selectedItem.anchors.length > 3) {
+            if ((selectedItem.type === "polygon" || selectedItem.type === "sides_polygon") && selectedItem.anchors.length > 3) {
                 selectedItem.anchors = R.update(-1, R.head(selectedItem.anchors), selectedItem.anchors);
             }
-            if (selectedItem.type === "polygon" && selectedItem.anchors.length <= 3) {
+            if ((selectedItem.type === "polygon" || selectedItem.type === "sides_polygon") && selectedItem.anchors.length <= 3) {
                 break;
             }
             if (selectedItem.type === "line" && selectedItem.anchors.length < 2) {

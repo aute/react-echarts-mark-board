@@ -1,6 +1,6 @@
 export declare type Anchor = [number, number];
 export declare type Anchors = Anchor[];
-export declare type ShapeType = "line" | "polygon" | "sides" | "arrow";
+export declare type ShapeType = "line" | "polygon" | "sides" | "arrow" | "sides_polygon";
 export declare type Shape = {
     anchors: Anchors;
     color?: string;

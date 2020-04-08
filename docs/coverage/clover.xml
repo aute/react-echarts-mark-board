@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1586250815537" clover="3.2.0">
-  <project timestamp="1586250815538" name="All files">
-    <metrics statements="139" coveredstatements="114" conditionals="120" coveredconditionals="83" methods="22" coveredmethods="19" elements="281" coveredelements="216" complexity="0" loc="139" ncloc="139" packages="1" files="3" classes="3"/>
+<coverage generated="1586328778077" clover="3.2.0">
+  <project timestamp="1586328778077" name="All files">
+    <metrics statements="139" coveredstatements="114" conditionals="125" coveredconditionals="87" methods="22" coveredmethods="19" elements="286" coveredelements="220" complexity="0" loc="139" ncloc="139" packages="1" files="3" classes="3"/>
     <file name="common.ts" path="/Users/aote/Desktop/react-echarts-draw-mark/src/common.ts">
-      <metrics statements="62" coveredstatements="44" conditionals="72" coveredconditionals="46" methods="1" coveredmethods="1"/>
+      <metrics statements="62" coveredstatements="44" conditionals="76" coveredconditionals="49" methods="1" coveredmethods="1"/>
       <line num="2" count="1" type="stmt"/>
       <line num="3" count="1" type="stmt"/>
       <line num="20" count="1" type="stmt"/>
@@ -25,7 +25,7 @@
       <line num="59" count="0" type="stmt"/>
       <line num="61" count="11" type="cond" truecount="2" falsecount="0"/>
       <line num="62" count="3" type="stmt"/>
-      <line num="64" count="11" type="cond" truecount="4" falsecount="0"/>
+      <line num="64" count="11" type="cond" truecount="5" falsecount="0"/>
       <line num="65" count="1" type="stmt"/>
       <line num="66" count="1" type="stmt"/>
       <line num="67" count="1" type="cond" truecount="1" falsecount="1"/>
@@ -48,15 +48,15 @@
       <line num="93" count="0" type="stmt"/>
       <line num="95" count="0" type="cond" truecount="0" falsecount="5"/>
       <line num="96" count="0" type="stmt"/>
-      <line num="97" count="0" type="cond" truecount="0" falsecount="5"/>
+      <line num="97" count="0" type="cond" truecount="0" falsecount="6"/>
       <line num="98" count="0" type="stmt"/>
       <line num="100" count="0" type="stmt"/>
       <line num="102" count="0" type="stmt"/>
       <line num="104" count="3" type="cond" truecount="5" falsecount="0"/>
       <line num="105" count="2" type="stmt"/>
-      <line num="106" count="2" type="cond" truecount="3" falsecount="1"/>
+      <line num="106" count="2" type="cond" truecount="4" falsecount="1"/>
       <line num="107" count="0" type="stmt"/>
-      <line num="109" count="2" type="cond" truecount="4" falsecount="0"/>
+      <line num="109" count="2" type="cond" truecount="5" falsecount="0"/>
       <line num="110" count="1" type="stmt"/>
       <line num="112" count="1" type="cond" truecount="3" falsecount="1"/>
       <line num="113" count="0" type="stmt"/>
@@ -68,7 +68,7 @@
       <line num="126" count="35" type="stmt"/>
     </file>
     <file name="index.tsx" path="/Users/aote/Desktop/react-echarts-draw-mark/src/index.tsx">
-      <metrics statements="46" coveredstatements="42" conditionals="34" coveredconditionals="24" methods="13" coveredmethods="11"/>
+      <metrics statements="46" coveredstatements="42" conditionals="35" coveredconditionals="25" methods="13" coveredmethods="11"/>
       <line num="1" count="1" type="stmt"/>
       <line num="2" count="1" type="stmt"/>
       <line num="3" count="1" type="stmt"/>
