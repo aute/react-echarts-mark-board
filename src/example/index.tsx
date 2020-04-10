@@ -75,7 +75,7 @@ const Buttons = (props: any) => {
             className={props.activeButton === "line" ? "active" : ""}>
             <ShowChart />
         </button>
-        <button onClick={() => props.createShape({ shapeType: "sides", color: "#fff000" })}
+        <button onClick={() => props.createShape({ shapeType: "sides_polygon", color: "#fff000" })}
             className={props.activeButton === "sides" ? "active" : ""}>
             <CallMade />
         </button>

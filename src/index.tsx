@@ -63,7 +63,7 @@ const markBoard: React.FC<Props> = ({ onChange, onReady, selected, showGrid = fa
                             markPoint: item.type === "arrow" && {
                                 silent: true,
                                 symbol: "triangle",
-                                symbolSize: R.max(12 * 2, lineWidth * 2.4 * 2),
+                                symbolSize: R.max(18, lineWidth * 3.6),
                                 symbolRotate: (endX-startX) > 0 ? Math.atan((-endY+startY)/(endX-startX)/winRatio)*180/Math.PI-90 : Math.atan((endY-startY)/(-endX+startX)/winRatio)*180/Math.PI+90,
                                 data: getMarkPointData(),
                                 animation: false
@@ -71,13 +71,14 @@ const markBoard: React.FC<Props> = ({ onChange, onReady, selected, showGrid = fa
                             markLine: (item.type === "sides" || item.type === "sides_polygon") && {
                                 silent: true,
                                 symbol: ["circle", "triangle"],
-                                symbolSize: R.max(12 * 2, lineWidth * 2.4 * 2),
+                                symbolSize:  R.max(18, lineWidth * 3.6),
                                 lineStyle: {
                                     type: "solid",
                                     width: lineWidth,
+                                    clip: false,
                                 },
                                 data: getMarkLineData(),
-                                animation: false
+                                animation: false,
                             },
                             clip: false,
                         };
