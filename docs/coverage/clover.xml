@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1587003683929" clover="3.2.0">
-  <project timestamp="1587003683929" name="All files">
+<coverage generated="1587005637517" clover="3.2.0">
+  <project timestamp="1587005637517" name="All files">
     <metrics statements="144" coveredstatements="119" conditionals="131" coveredconditionals="91" methods="24" coveredmethods="21" elements="299" coveredelements="231" complexity="0" loc="144" ncloc="144" packages="1" files="3" classes="3"/>
     <file name="common.ts" path="/Users/aote/Desktop/react-echarts-draw-mark/src/common.ts">
       <metrics statements="62" coveredstatements="44" conditionals="76" coveredconditionals="49" methods="1" coveredmethods="1"/>

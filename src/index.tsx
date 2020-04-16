@@ -38,7 +38,7 @@ const markBoard: React.FC<Props> = ({ onChange, onReady, selected, showGrid = fa
                             const spacingCoords = coords ? coords.map(i=>{
                                 return i.map(v=>{
                                     let value = v > 1 ? 1 : v;
-                                    value = v < 0 ? 0 : v;
+                                    value = value < 0 ? 0 : value;
                                     return value;
                                 });
                             }) : null;
