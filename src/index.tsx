@@ -35,12 +35,19 @@ const markBoard: React.FC<Props> = ({ onChange, onReady, selected, showGrid = fa
                     (item: Shape, index: number) => {
                         const getMarkLineData = (): object => {
                             const coords = item.anchors[0] ? getSides(item.anchors as [Anchor, Anchor], winRatio) : null;
+                            const spacingCoords = coords ? coords.map(i=>{
+                                return i.map(v=>{
+                                    let value = v > 1 ? 1 : v;
+                                    value = v < 0 ? 0 : v;
+                                    return value;
+                                });
+                            }) : null;
                             return coords ? [
                                 [{
-                                    coord: coords[0]
+                                    coord: spacingCoords[0]
                                 },
                                 {
-                                    coord: coords[1]
+                                    coord: spacingCoords[1]
                                 }]
                             ] : null;
                         };

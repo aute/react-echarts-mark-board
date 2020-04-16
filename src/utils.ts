@@ -84,12 +84,12 @@ export const getSides = (line: [Anchor, Anchor], viewRatio: number): [Anchor, An
 
     return [
         [
-            (startX + endX) / 2 - (startY - endY) / 8 / viewRatio,
-            (startY + endY) / 2 + (startX - endX) / 8 * viewRatio
+            (startX + endX) / 2 - (startY - endY) / 4 / viewRatio,
+            (startY + endY) / 2 + (startX - endX) / 4 * viewRatio
         ],
         [
-            (startX + endX) / 2 + (startY - endY) / 8 / viewRatio,
-            (startY + endY) / 2 - (startX - endX) / 8 * viewRatio
+            (startX + endX) / 2 + (startY - endY) / 4 / viewRatio,
+            (startY + endY) / 2 - (startX - endX) / 4 * viewRatio
         ]
     ];
 };

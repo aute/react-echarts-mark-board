@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1586509245446" clover="3.2.0">
-  <project timestamp="1586509245447" name="All files">
-    <metrics statements="139" coveredstatements="114" conditionals="125" coveredconditionals="87" methods="22" coveredmethods="19" elements="286" coveredelements="220" complexity="0" loc="139" ncloc="139" packages="1" files="3" classes="3"/>
+<coverage generated="1587003683929" clover="3.2.0">
+  <project timestamp="1587003683929" name="All files">
+    <metrics statements="144" coveredstatements="119" conditionals="131" coveredconditionals="91" methods="24" coveredmethods="21" elements="299" coveredelements="231" complexity="0" loc="144" ncloc="144" packages="1" files="3" classes="3"/>
     <file name="common.ts" path="/Users/aote/Desktop/react-echarts-draw-mark/src/common.ts">
       <metrics statements="62" coveredstatements="44" conditionals="76" coveredconditionals="49" methods="1" coveredmethods="1"/>
       <line num="2" count="1" type="stmt"/>
@@ -68,7 +68,7 @@
       <line num="126" count="35" type="stmt"/>
     </file>
     <file name="index.tsx" path="/Users/aote/Desktop/react-echarts-draw-mark/src/index.tsx">
-      <metrics statements="46" coveredstatements="42" conditionals="35" coveredconditionals="25" methods="13" coveredmethods="11"/>
+      <metrics statements="51" coveredstatements="47" conditionals="41" coveredconditionals="29" methods="15" coveredmethods="13"/>
       <line num="1" count="1" type="stmt"/>
       <line num="2" count="1" type="stmt"/>
       <line num="3" count="1" type="stmt"/>
@@ -94,27 +94,32 @@
       <line num="36" count="25" type="stmt"/>
       <line num="37" count="3" type="cond" truecount="2" falsecount="0"/>
       <line num="38" count="3" type="cond" truecount="2" falsecount="0"/>
-      <line num="47" count="25" type="cond" truecount="2" falsecount="0"/>
-      <line num="48" count="25" type="stmt"/>
-      <line num="49" count="0" type="cond" truecount="0" falsecount="2"/>
-      <line num="50" count="0" type="cond" truecount="0" falsecount="2"/>
-      <line num="52" count="25" type="stmt"/>
-      <line num="88" count="42" type="stmt"/>
-      <line num="95" count="0" type="stmt"/>
-      <line num="96" count="0" type="stmt"/>
-      <line num="106" count="28" type="cond" truecount="2" falsecount="0"/>
-      <line num="110" count="38" type="stmt"/>
-      <line num="115" count="4" type="stmt"/>
-      <line num="118" count="38" type="stmt"/>
-      <line num="119" count="1" type="stmt"/>
-      <line num="122" count="38" type="stmt"/>
-      <line num="123" count="16" type="cond" truecount="2" falsecount="0"/>
-      <line num="124" count="8" type="stmt"/>
-      <line num="125" count="8" type="cond" truecount="2" falsecount="0"/>
+      <line num="39" count="4" type="stmt"/>
+      <line num="40" count="8" type="cond" truecount="1" falsecount="1"/>
+      <line num="41" count="8" type="cond" truecount="1" falsecount="1"/>
+      <line num="42" count="8" type="stmt"/>
+      <line num="45" count="3" type="cond" truecount="2" falsecount="0"/>
+      <line num="54" count="25" type="cond" truecount="2" falsecount="0"/>
+      <line num="55" count="25" type="stmt"/>
+      <line num="56" count="0" type="cond" truecount="0" falsecount="2"/>
+      <line num="57" count="0" type="cond" truecount="0" falsecount="2"/>
+      <line num="59" count="25" type="stmt"/>
+      <line num="95" count="42" type="stmt"/>
+      <line num="102" count="0" type="stmt"/>
+      <line num="103" count="0" type="stmt"/>
+      <line num="113" count="28" type="cond" truecount="2" falsecount="0"/>
+      <line num="117" count="38" type="stmt"/>
+      <line num="122" count="4" type="stmt"/>
+      <line num="125" count="38" type="stmt"/>
+      <line num="126" count="1" type="stmt"/>
       <line num="129" count="38" type="stmt"/>
-      <line num="130" count="14" type="stmt"/>
-      <line num="133" count="38" type="stmt"/>
-      <line num="146" count="1" type="stmt"/>
+      <line num="130" count="16" type="cond" truecount="2" falsecount="0"/>
+      <line num="131" count="8" type="stmt"/>
+      <line num="132" count="8" type="cond" truecount="2" falsecount="0"/>
+      <line num="136" count="38" type="stmt"/>
+      <line num="137" count="14" type="stmt"/>
+      <line num="140" count="38" type="stmt"/>
+      <line num="153" count="1" type="stmt"/>
     </file>
     <file name="utils.ts" path="/Users/aote/Desktop/react-echarts-draw-mark/src/utils.ts">
       <metrics statements="31" coveredstatements="28" conditionals="14" coveredconditionals="13" methods="8" coveredmethods="7"/>
