@@ -20,24 +20,24 @@
     </h1>
     <div class='clearfix'>
       <div class='fl pad1y space-right2'>
-        <span class="strong">94.12% </span>
+        <span class="strong">94.29% </span>
         <span class="quiet">Statements</span>
-        <span class='fraction'>64/68</span>
+        <span class='fraction'>66/70</span>
       </div>
       <div class='fl pad1y space-right2'>
-        <span class="strong">70.73% </span>
+        <span class="strong">72.09% </span>
         <span class="quiet">Branches</span>
-        <span class='fraction'>29/41</span>
+        <span class='fraction'>31/43</span>
       </div>
       <div class='fl pad1y space-right2'>
-        <span class="strong">86.67% </span>
+        <span class="strong">87.5% </span>
         <span class="quiet">Functions</span>
-        <span class='fraction'>13/15</span>
+        <span class='fraction'>14/16</span>
       </div>
       <div class='fl pad1y space-right2'>
-        <span class="strong">92.16% </span>
+        <span class="strong">92.45% </span>
         <span class="quiet">Lines</span>
-        <span class='fraction'>47/51</span>
+        <span class='fraction'>49/53</span>
       </div>
     </div>
     <p class="quiet">
@@ -198,7 +198,11 @@
 <a name='L150'></a><a href='#L150'>150</a>
 <a name='L151'></a><a href='#L151'>151</a>
 <a name='L152'></a><a href='#L152'>152</a>
-<a name='L153'></a><a href='#L153'>153</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
+<a name='L153'></a><a href='#L153'>153</a>
+<a name='L154'></a><a href='#L154'>154</a>
+<a name='L155'></a><a href='#L155'>155</a>
+<a name='L156'></a><a href='#L156'>156</a>
+<a name='L157'></a><a href='#L157'>157</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
@@ -234,14 +238,17 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">25x</span>
-<span class="cline-any cline-yes">3x</span>
-<span class="cline-any cline-yes">3x</span>
-<span class="cline-any cline-yes">4x</span>
-<span class="cline-any cline-yes">8x</span>
-<span class="cline-any cline-yes">8x</span>
-<span class="cline-any cline-yes">8x</span>
+<span class="cline-any cline-yes">28x</span>
+<span class="cline-any cline-yes">51x</span>
+<span class="cline-any cline-yes">102x</span>
+<span class="cline-any cline-yes">102x</span>
+<span class="cline-any cline-yes">102x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">25x</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-yes">3x</span>
 <span class="cline-any cline-yes">3x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -255,6 +262,7 @@
 <span class="cline-any cline-yes">25x</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">25x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -385,15 +393,18 @@ const markBoard: React.FC&lt;Props&gt; = ({ onChange, onReady, selected, <span c
                 ...chartInitData,
                 series: shapeList.map(
                     (item: Shape, index: number) =&gt; {
-                        const getMarkLineData = (): object =&gt; {
-                            const coords = item.anchors[0] ? getSides(item.anchors as [Anchor, Anchor], winRatio) : null;
-                            const spacingCoords = coords ? coords.map(i=&gt;{
+                        const coordsMapSpacing = coords =&gt; {
+                            return coords?.map(i=&gt;{
                                 return i.map(v=&gt;{
                                     let value = v &gt; 1 ? <span class="branch-0 cbranch-no" title="branch not covered" >1 </span>: v;
                                     value = value &lt; 0 ? <span class="branch-0 cbranch-no" title="branch not covered" >0 </span>: value;
                                     return value;
                                 });
-                            }) : null;
+                            });
+                        };
+                        const getMarkLineData = (): object =&gt; {
+                            const coords = item.anchors[0] ? getSides(item.anchors as [Anchor, Anchor], winRatio) : null;
+                            const spacingCoords = coordsMapSpacing(coords);
                             return coords ? [
                                 [{
                                     coord: spacingCoords[0]
@@ -408,10 +419,11 @@ const markBoard: React.FC&lt;Props&gt; = ({ onChange, onReady, selected, <span c
                             const coord = <span class="cstat-no" title="statement not covered" >item.anchors[0] ? getArrow(item.anchors as [Anchor, Anchor]) : null;</span>
 <span class="cstat-no" title="statement not covered" >                            return coord ? [{coord}]: null;</span>
                         };
+                        
                         return {
                             type: "line",
                             symbolSize: index === selected ? SYMBOL_SIZE : 0,
-                            data: item.anchors,
+                            data: coordsMapSpacing(item.anchors),
                             lineStyle: {
                                 color: item.color,
                                 width: lineWidth,
@@ -508,7 +520,7 @@ export default markBoard;</pre></td></tr>
 </div><!-- /wrapper -->
 <div class='footer quiet pad2 space-top1 center small'>
   Code coverage
-  generated by <a href="https://istanbul.js.org/" target="_blank">istanbul</a> at Thu Apr 16 2020 10:53:57 GMT+0800 (GMT+08:00)
+  generated by <a href="https://istanbul.js.org/" target="_blank">istanbul</a> at Tue Apr 28 2020 16:35:14 GMT+0800 (GMT+08:00)
 </div>
 </div>
 <script src="prettify.js"></script>

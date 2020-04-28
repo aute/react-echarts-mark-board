@@ -33,15 +33,18 @@ const markBoard: React.FC<Props> = ({ onChange, onReady, selected, showGrid = fa
                 ...chartInitData,
                 series: shapeList.map(
                     (item: Shape, index: number) => {
-                        const getMarkLineData = (): object => {
-                            const coords = item.anchors[0] ? getSides(item.anchors as [Anchor, Anchor], winRatio) : null;
-                            const spacingCoords = coords ? coords.map(i=>{
+                        const coordsMapSpacing = coords => {
+                            return coords?.map(i=>{
                                 return i.map(v=>{
                                     let value = v > 1 ? 1 : v;
                                     value = value < 0 ? 0 : value;
                                     return value;
                                 });
-                            }) : null;
+                            });
+                        };
+                        const getMarkLineData = (): object => {
+                            const coords = item.anchors[0] ? getSides(item.anchors as [Anchor, Anchor], winRatio) : null;
+                            const spacingCoords = coordsMapSpacing(coords);
                             return coords ? [
                                 [{
                                     coord: spacingCoords[0]
@@ -56,10 +59,11 @@ const markBoard: React.FC<Props> = ({ onChange, onReady, selected, showGrid = fa
                             const coord = item.anchors[0] ? getArrow(item.anchors as [Anchor, Anchor]) : null;
                             return coord ? [{coord}]: null;
                         };
+                        
                         return {
                             type: "line",
                             symbolSize: index === selected ? SYMBOL_SIZE : 0,
-                            data: item.anchors,
+                            data: coordsMapSpacing(item.anchors),
                             lineStyle: {
                                 color: item.color,
                                 width: lineWidth,
