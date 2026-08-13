@@ -1,3 +1,5 @@
+
+
 # [react-echarts-mark-board](https://github.com/aute/react-echarts-mark-board) &middot; [![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/aute/react-echarts-mark-board/blob/master/LICENSE) [![npm version](https://img.shields.io/npm/v/react-echarts-mark-board)](https://www.npmjs.com/package/react-echarts-mark-board)  [![coverage](./docs/coverage/badges/badge-statements.svg)](https://aute.github.io/react-echarts-mark-board/coverage/lcov-report/) 
 
 Mark drawing tool, support for drawing lines , rays and other graphics.
@@ -28,7 +30,7 @@ $ npm install --save react-echarts-mark-board
 For webpack or similar environment：
 
 ```js
-import ReactReactDrawMark from 'react-echarts-mark-board';
+import MarkBoard from 'react-echarts-mark-board';
 ```
 
 
@@ -64,4 +66,3 @@ $ npm test
 
 ## TODO
 [TODO.md](./TODO.md)
-
